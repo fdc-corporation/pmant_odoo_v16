@@ -1,0 +1,133 @@
+<odoo>
+	<report id="report_certificado_operatividad" model="maintenance.request" string="Certificado de Operatividad" report_type="qweb-pdf" name="pmant.certificado_operatividad_report" groups="base.group_no_one" />
+	<template id="certificado_operatividad_report">
+		<t t-call="web.basic_layout">
+			<t t-foreach="docs.tarea.planequipo" t-as="doc">
+				<div class="page">
+					<div class="row">
+						<div class="col-4">
+							<img t-att-src="image_data_uri(doc.equipo.company_id.logo)" style="max-height: 80px;" alt="Logo" />
+						</div>
+						<div class="col-4" />
+						<div class="col-4">
+							<img style="width:250px; height:150px;float: right;" src="https://fdc-corporation.com/public/assets/img/erp/header_repo.png" />
+						</div>
+					</div>
+					<div style="margin:-40px 0px 0px 0px;">
+						<h1 style="text-align: center;font-size: 23pxpx;">
+							<strong>
+								Certificado de Operatividad
+							</strong>
+						</h1>
+						<hr />
+						<h5 style="font-size: 15px;">
+							<strong>
+								Señores :
+							</strong>
+							<span t-esc="doc.equipo.propietario.name" />
+						</h5>
+						<h5 style="font-size: 15px;">
+							<strong>
+								RUC :
+							</strong>
+							<span t-field="doc.equipo.propietario.vat" />
+						</h5>
+						<h5 style="font-size: 15px;">
+							<strong>
+								Dirección :
+							</strong>
+							<span t-esc="doc.equipo.propietario.street" />
+						</h5> 
+						<p style="font-size: 16px;">
+							Mediante la presente FDC CORP extiende el certificado de operatividad
+							del equipo en referencia el cual cuenta con las condiciones óptimas de
+							funcionamiento en base a las recomendaciones indicadas para su próximo
+							mantenimiento. El equipo se encuentra ubicado en
+							<span t-field="doc.equipo.ubicacion" />
+							.Datos
+							del Equipo:
+						</p>
+						<ul style="list-style: none;padding: 0px;">
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Denominación del Equipo :
+									</strong>
+									<span t-esc="doc.equipo.name" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Marca :
+									</strong>
+									<span t-field="doc.equipo.marca" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Procedencia :
+									</strong>
+									<span t-field="doc.equipo.ubicacion" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Modelo :
+									</strong>
+									<span t-field="doc.equipo.model" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Serie :
+									</strong>
+									<span t-field="doc.equipo.serial_no" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Fecha de Mantenimiento :
+									</strong>
+									<span t-field="doc.fecha_ejec" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Plano :
+									</strong>
+									<span t-field="doc.plan" />
+								</p>
+							</li>
+							<li>
+								<p style="font-size: 14px;">
+									<strong>
+										Vencimiento del Certificado :
+									</strong>
+									<span t-field="doc.fecha_ejecprox" />
+								</p>
+							</li>
+						</ul>
+						<p style="text-decoration: underline; margin:10px 0px 0px 0px;">
+							<strong>
+								Recomendaciones:
+							</strong>
+						</p>
+						<p style="margin:0px;">
+							realizar el mantenimiento preventivo de acuerdo al programa
+						</p>
+						<hr />
+						<p style="font-size: 12px;">
+							*Terminos y condiciones de acuerdo a https://www.fdc-corporation.com/
+						</p>
+					</div>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

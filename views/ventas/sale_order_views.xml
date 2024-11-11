@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Acción para abrir el asistente -->
+    <record id="action_open_equipment_selection_wizard" model="ir.actions.act_window">
+        <field name="name">Seleccionar Equipos</field>
+        <field name="res_model">wizard.equipment.selection</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_order_id': active_id}</field>
+    </record>
+
+    <!-- Vista del asistente para seleccionar equipo -->
+    <record id="view_equipment_selection_wizard" model="ir.ui.view">
+        <field name="name">wizard.equipment.selection.form</field>
+        <field name="model">wizard.equipment.selection</field>
+        <field name="arch" type="xml">
+            <form string="Seleccionar Equipos">
+                <group>
+                    <field name="order_id" readonly="1"  />
+                    <field name="ubicacion"/>
+                    <field name="equipment_ids" domain="[('ubicacion', '=', ubicacion)]" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button string="Agregar" type="object" name="action_add_equipment" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de orden de venta para añadir el botón -->
+    <record id="view_sale_order_form_inherit_with_equipment" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.with.equipment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(action_open_equipment_selection_wizard)d" type="action" string="Agregar un Equipo" class="oe_highlight" icon="fa-plus"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
