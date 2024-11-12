@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="form_solicitud" name="Solicitar Servicio">
+		<t t-call="website.layout">
+			<div class="container my-5">
+				<h1 class="mb-4">
+					Solicita un mantenimiento para tu equipo
+				</h1>
+                <form action="/solicitud/mantenimiento" method="POST" enctype="multipart/form-data">
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="nombre" class="form-label">
+								Nombre
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+							<input type="hidden" class="form-control" name="id_equipo" t-att-value="equipo.id" />
+							<!-- Puedes enviar el ID como parte del formulario si es necesario -->
+							<input type="text" class="form-control" t-att-value="usuario.name" name="nombre" required="required" />
+
+						</div>
+						<div class="mb-3 col-md-6">
+							<label for="correo" class="form-label">
+								Correo Electrónico
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<input type="email" class="form-control" t-att-value="usuario.email" name="correo" required="required" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="telefono" class="form-label">
+								Teléfono
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<input type="text" class="form-control" name="telefono" required="required" />
+						</div>
+						<div class="mb-3 col-md-6">
+							<label for="telefono" class="form-label">
+								RUC
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<input type="text" class="form-control" name="ruc"  t-att-value="usuario.vat" required="required" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="equipo" class="form-label">
+								Equipo
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<input type="text" class="form-control" t-att-value="equipo.name" readonly="readonly" name="equipo" required="required" />
+						</div>
+						<div class="mb-3 col-md-6">
+							<label for="marca" class="form-label">
+								Marca
+							</label>
+							<input type="text" class="form-control" t-att-value="equipo.marca" readonly="readonly" name="marca" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="modelo" class="form-label">
+								Modelo
+							</label>
+							<input type="text" class="form-control" t-att-value="equipo.model" readonly="readonly" name="modelo" />
+						</div>
+						<div class="mb-3 col-md-6">
+							<label for="serie" class="form-label">
+								N° Serie
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<input type="text" class="form-control" t-att-value="equipo.serial_no" readonly="readonly" name="serie" required="required" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<label for="servicio" class="form-label">
+								Tipo de Servicio
+								<span class="text-danger">
+									(*)
+								</span>
+							</label>
+							<select class="form-select" name="servicio" aria-label="Default select example">
+								<option value="">
+									Select. Servicio
+								</option>
+								<option value="Preventivo">
+									Preventivo
+								</option>
+								<option value="Instalación">
+									Instalación
+								</option>
+								<option value="Mantenimiento">
+									Mantenimiento
+								</option>
+								<option value="Modificación">
+									Modificación
+								</option>
+							</select>
+						</div>
+						<div class="mb-3 col-md-6">
+							<div class="mb-3">
+								<label for="formFileMultiple" class="form-label">
+									Imágenes de referencia
+								</label>
+								<input class="form-control" name="imagenes" type="file" id="formFileMultiple" multiple="multiple" accept="image/*" />
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						Enviar Solicitud
+					</button>
+				</form>
+			</div>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	  <!-- Definición de la Secuencia -->
+	  <record id="seq_ot_mantenimiento" model="ir.sequence">
+		<field name="name">OT mantenimiento</field>
+		<field name="code">ot.mantenimiento.sequence</field>
+		<field name="prefix">OT/</field>
+		<field name="padding">4</field>
+		<field name="number_next">1</field>
+		<field name="number_increment">1</field>
+	</record>
+	
+	<record id="ots_add" model="ir.ui.view">
+		<field name="name">ots.view</field>
+		<field name="model">maintenance.request</field>
+		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='reset_equipment_request']" position="after">
+				<button string="Enviar correo a la Empresa" name="send_report_empresa" type="object" />
+				<button string="Enviar correo a la Sucursal" name="send_report_sucursal" type="object" />
+				<button name="crm_oportunidad_create" invisible="stage_id in (1, 2)" type="object" string="Crear Oportunidad" class="oe_highlight" />
+				<button name="set_firma_cliente_mantenimiento"  type="object" string="Solicitar firma del Servicio" class="oe_highlight" />
+				<button name="set_firma_empresa_acta" type="object" string="Solicitar firma de Acta" class="oe_highlight" />
+			</xpath>
+			<!-- <xpath expr="//div[@class='oe_title']/h1" position="before">
+				<field name="sequence" readonly="1" style="width: auto; margin-right: 10px;"/>
+			</xpath> -->
+		
+			<xpath expr="//field[@name='maintenance_type']" position="after">
+				<field name="id" invisible="1" />
+				<field name="estado" invisible="1" />
+				<field name="tex" invisible="1" />
+				<field name="fecha_ejec" invisible="stage_id in (1,2)" readonly="1" />
+				<!-- <field name="activity_ids" widget="kanban_activity"/> -->
+				<field name="tarea" string="Tarea" domain="[('ots', '=', False)]" context="{'default_ots2': id }" />
+				<field name="empresa" readonly="1" />
+				<field name="ubicacion" readonly="1" />
+				<field name="oportunidad" readonly="1"/>
+				<field name="order_compra" invisible="stage_id in (1, 2)" />
+				<field name="selec_sunat" invisible="stage_id in (1, 2, 3)" />
+				<field name="factura_sunat" invisible="not selec_sunat" />
+                <field name="factura" invisible="stage_id in (1, 2, 3) and selec_sunat" />
+			</xpath>
+			<xpath expr="//field[@name='schedule_date']" position="after">
+				<field name="subodinados" widget="many2many_tags" ></field>
+			</xpath>
+			<xpath expr="//field[@name='schedule_date']" position="before">
+				<field name="event_id" readonly="1" ></field>
+			</xpath>
+			<xpath expr="//field[@name='maintenance_type']" position="attributes">
+				<attribute name="invisible">
+					1
+				</attribute>
+			</xpath>
+			<xpath expr="//field[@name='close_date']" position="attributes">
+				<attribute name="invisible">
+					1
+				</attribute>
+			</xpath>
+			<xpath expr="//field[@name='category_id']" position="attributes">
+				<attribute name="invisible">
+					1
+				</attribute>
+			</xpath>
+			<xpath expr="//field[@name='equipment_id']" position="attributes">
+				<attribute name="invisible">
+					1
+				</attribute>
+			</xpath>
+			
+		</field>
+	</record>
+	<!-- FIN VISTA MAINTANCE REQUEST -->
+</odoo>

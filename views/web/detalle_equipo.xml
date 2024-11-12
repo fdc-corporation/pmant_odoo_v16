@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="detalle_equipo" name="Detalles de Equipo">
+		<t t-call="website.layout">
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+				</script>
+				<div class="main-detalles-equipo ">
+					<t t-foreach="equipo" t-as="doc">
+						<div class="main_detalles">
+							<div class="nombre_equipo">
+								<div class="titulo">
+									<label class="o_form_label">
+										Nombre
+									</label>
+									<h1>
+										<t t-esc="doc.name" />
+										<a t-att-href="'/my/equipos/' + str(doc.id) +'/solicitud'" class="btn btn-primary btn-sm">
+											Solicitar Mantenimiento
+										</a>
+									</h1>
+								</div>
+								<div class="img-producto">
+									<img t-att-src="'/web/image/maintenance.equipment/' + str(doc.id) + '/image'" alt="Equipo QR Code" width="86px" />
+									<img t-att-src="'/web/image/maintenance.equipment/' + str(doc.id) + '/qr_image'" alt="Equipo QR Code" width="100px" />
+								</div>
+							</div>
+							<div class="detalles_propietario">
+								<div class="parte1_detalles">
+									<div class="detalle-1">
+										<div class="item-detalle">
+											<label>
+												Categoria
+											</label>
+											<span>
+												<t t-esc="doc.category_id.name" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Propietario
+											</label>
+											<span>
+												<t t-esc="doc.propietario.name" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Ubicacion
+											</label>
+											<span>
+												<t t-esc="doc.ubicacion.name" />
+											</span>
+										</div>
+									</div>
+									<div class="detalle-2">
+										<div class="item-detalle">
+											<label>
+												Equipo de mantenimiento
+											</label>
+											<span>
+												<t t-esc="doc.maintenance_team_id.name" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Fecha asignada
+											</label>
+											<span>
+												<t t-esc="doc.assign_date" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Fecha de deshecho
+											</label>
+											<spanp>
+												<t t-esc="doc.scrap_date" />
+											</spanp>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="main_detalles">
+							<div class="detalles_propietario">
+								<div class="parte1_detalles">
+									<div class="detalle-1">
+										<div class="item-detalle">
+											<label>
+												H. de uso promedio diario
+											</label>
+											<span>
+												<t t-esc="doc.time_uso" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Modelo
+											</label>
+											<span>
+												<t t-esc="doc.model" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Marca
+											</label>
+											<span>
+												<t t-esc="doc.marca" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Nº de serie
+											</label>
+											<span>
+												<t t-esc="doc.serial_no" />
+											</span>
+										</div>
+									</div>
+									<div class="detalle-2">
+										<div class="item-detalle">
+											<label>
+												Fecha efectiva
+											</label>
+											<span>
+												<t t-esc="doc.effective_date" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Fecha Expiración Garantía
+											</label>
+											<span>
+												<t t-esc="doc.warranty_date" />
+											</span>
+										</div>
+										<div class="item-detalle">
+											<label>
+												Fabricante
+											</label>
+											<spanp>
+												<t t-esc="doc.fabricante" />
+											</spanp>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="main_detalles">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-mantenimiento" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+										Mantenimientos
+									</button>
+									<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-adjunto" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+										Adjuntos
+									</button>
+								</div>
+							</nav>
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="nav-mantenimiento" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+									<div class="titulo">
+										<h5>
+											Historial de Mantenimiento del Equipo:
+										</h5>
+									</div>
+									<div style="display:flex;flex-flow:row;justify-content: end;">
+										<form method="get" style="width:30%;display:flex;flex-flow: row;align-items: center;justify-content: end;gap: 15px;">
+											<input type="text" class="form-control" name="filtro" t-att-value="filtro" placeholder="Busca por el estado..." />
+											<button class="btn btn-primary" type="submit">
+												Buscar
+											</button>
+										</form>
+									</div>
+									<table class="table" style="font-size: 13px;">
+										<thead>
+											<tr>
+												<th>
+													N°
+												</th>
+												<th>
+													Equipo
+												</th>
+												<th>
+													Plan de Tarea
+												</th>
+												<th>
+													Estado del Servicio
+												</th>
+												<th>
+													Fecha Ejecutada
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-set="item" t-value="0" />
+											<t t-foreach="planequipo" t-as="plan">
+												<tr>
+													<td>
+														<t t-set="item" t-value="item + 1" />
+														<span t-out="item" />
+													</td>
+													<td>
+														<t t-esc="plan.equipo.name" />
+													</td>
+													<td>
+														<t t-esc="plan.plan.name" />
+													</td>
+													<td>
+														<t t-esc="plan.estado" />
+													</td>
+													<td>
+														<t t-esc="plan.fecha_ejec" />
+													</td>
+													<!--
+													<td>
+													<t t-if="plan.plan">
+													<a t-att-href="'/my/equipos/reporte/' + str(plan.id) +''" class="btn btn-primary btn-sm">
+													Reporte
+													</a>
+													</t>
+													<t t-else="">
+													</t>
+													</td>
+													-->
+												</tr>
+											</t>
+										</tbody>
+									</table>
+									<!-- PAGINACION DE LOS REGISTROS -->
+									<t t-if="pager">
+										<nav aria-label="Page navigation example">
+											<ul class="pagination">
+												<t t-if="pager['page_previous']['url']">
+													<li class="page-item">
+														<a class="page-link" t-att-href="pager['page_previous']['url']" aria-label="Previous">
+															<span aria-hidden="true">
+																&#171;
+															</span>
+															Previous
+														</a>
+													</li>
+												</t>
+												<t t-foreach="pager['pages']" t-as="page">
+													<li t-att-class="'page-item' + (' active' if page['num'] == pager['page']['num'] else '')">
+														<a class="page-link" t-att-href="page['url']">
+															<t t-esc="page['num']" />
+														</a>
+													</li>
+												</t>
+												<t t-if="pager['page_next']['url']">
+													<li class="page-item">
+														<a class="page-link" t-att-href="pager['page_next']['url']" aria-label="Next">
+															Next
+															<span aria-hidden="true">
+																&#187;
+															</span>
+														</a>
+													</li>
+												</t>
+											</ul>
+										</nav>
+									</t>
+								</div>
+								<div class="tab-pane fade" id="nav-adjunto" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+									<div class="titulo">
+										<h5>
+											Adjuntos del Equipo:
+										</h5>
+									</div>
+									<br>
+									</br>
+									<div class="contenedor-archivos">
+										<t t-foreach="equipo.adjunto" t-as="adjunto">
+											<!-- Extrae la extensión del nombre del archivo -->
+											<t t-set="extension" t-value="adjunto.name.split('.')[-1].lower()" />
+											<t t-if="adjunto.adjunto">
+												<div class="card-adjunto">
+													<div class="img">
+														<a class="" t-att-href="'/my/equipos/descargar_documento/' + str(adjunto.id)">
+															<!-- Icono para PDF -->
+															<t t-if="extension == 'pdf'">
+																<img src="/pmant/static/src/img/pdf.webp" alt="PDF Icon" />
+															</t>
+															<!-- Icono para imágenes -->
+															<t t-if="extension in ['jpg', 'jpeg', 'png', 'gif']">
+																<img style="padding: 10px;" src="/pmant/static/src/img/png.png" alt="Image Icon" />
+															</t>
+															<!-- Icono para documentos de Word -->
+															<t t-if="extension in ['doc', 'docx']">
+																<img src="/pmant/static/src/img/docx.png" alt="Word Icon" />
+															</t>
+															<!-- Icono para documentos de Excel -->
+															<t t-if="extension in ['xls', 'xlsx']">
+																<img src="/pmant/static/src/img/xlsx.png" alt="Excel Icon" />
+															</t>
+															<!-- Icono para otros tipos de archivos -->
+															<t t-if="extension not in ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'doc', 'docx', 'xls', 'xlsx']">
+																<img src="/pmant/static/src/img/archivo.jpg" alt="File Icon" />
+															</t>
+														</a>
+													</div>
+													<span t-esc="adjunto.name">
+													</span>
+												</div>
+											</t>
+										</t>
+									</div>
+								</div>
+							</div>
+							<div class="detalle-2">
+								<div class="item-detalle">
+									<label style="font-size: 14px;font-weight: 700;">
+										Proximo Mantenimiento :
+									</label>
+									<span style="font-size: 13px;">
+										<t t-esc="doc.fecha_prox" />
+									</span>
+								</div>
+							</div>
+						</div>
+					</t>
+				</div>
+			</link>
+		</t>
+	</template>
+</odoo>

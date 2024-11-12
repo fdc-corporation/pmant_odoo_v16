@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="equipos_sede" name="Equipo Registrados">
+		<t t-call="website.layout">
+			<div class="main-equipos-portal-content">
+				<t t-if="equipos and equipos[0].ubicacion">
+					<h1>
+						Equipos de la Sede /
+						<t t-esc="equipos[0].ubicacion.name" />
+						<a t-att-href="'/download/reporte_sede_equipos/' + str(equipos[0].ubicacion.id)" class="btn btn-primary">
+							Reporte sede - equipos
+						</a>
+					</h1>
+				</t>
+				<t t-else="">
+					<h1>
+						Equipos de la Sede
+						
+					</h1>
+				</t>
+				<hr />
+				<div style="display:flex;flex-flow:row;justify-content: end;">
+					<form method="get" style="width:30%;display:flex;flex-flow: row;align-items: center;justify-content: end;gap: 15px;">
+						<input type="text" class="form-control" name="filtro" t-att-value="filtro" placeholder="Buscar tu equipo..." />
+						<button class="btn btn-primary" type="submit">
+							Buscar
+						</button>
+					</form>
+				</div>
+				<div class="main-equipos-sede">
+					<t t-if="equipos">
+						<t t-foreach="equipos" t-as="equipo">
+							<div class="card-equipo">
+								<a t-att-href="'/my/equipos/' + str(equipo.id)">
+									<div class="card-img">
+										<img t-att-src="'/web/image/maintenance.equipment/' + str(equipo.id) + '/image'" alt="Equipo QR Code" />
+									</div>
+									<div class="card-descripcion">
+										<h6>
+											<t t-esc="equipo.name" />
+										</h6>
+										<h5>
+											<t t-esc="equipo.marca" />
+										</h5>
+									</div>
+								</a>
+							</div>
+						</t>
+					</t>
+					<t t-else="">
+						<p>
+							<strong>
+								No hay equipos registrados para esta sede.
+							</strong>
+							<br />
+							Si cree que esto es un error, comuníquese con FDC CORP.
+							<br />
+							Gracias.
+						</p>
+					</t>
+				</div>
+				<br>
+				</br>
+				<!-- Paginación -->
+				<t t-if="pager">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<t t-if="pager['page_previous']['url']">
+								<li class="page-item">
+									<a class="page-link" t-att-href="pager['page_previous']['url']" aria-label="Previous">
+										<span aria-hidden="true">
+											&#171;
+										</span>
+										Previous
+									</a>
+								</li>
+							</t>
+							<t t-foreach="pager['pages']" t-as="page">
+								<li t-att-class="'page-item' + (' active' if page['num'] == pager['page']['num'] else '')">
+									<a class="page-link" t-att-href="page['url']">
+										<t t-esc="page['num']" />
+									</a>
+								</li>
+							</t>
+							<t t-if="pager['page_next']['url']">
+								<li class="page-item">
+									<a class="page-link" t-att-href="pager['page_next']['url']" aria-label="Next">
+										Next
+										<span aria-hidden="true">
+											&#187;
+										</span>
+									</a>
+								</li>
+							</t>
+						</ul>
+					</nav>
+				</t>
+			</div>
+		</t>
+	</template>
+</odoo>

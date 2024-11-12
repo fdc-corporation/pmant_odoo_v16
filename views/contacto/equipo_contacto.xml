@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_partner_form_inherit_equipos" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.equipos</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/> <!-- Asegúrate de que el ID sea correcto -->
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='equipos']" position="attributes">
+                <attribute name="invisible">parent_id</attribute>
+              </xpath>
+            <!-- Inserta una nueva página en el notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Equipos">
+                    <field name="equipos_ubicacion">
+                        <tree string="Equipos">
+                            <field name="name"/>
+                            <field name="assign_date"/>
+                            <field name="serial_no"/>
+                            <field name="technician_user_id"/>
+                            <field name="category_id"/>
+                            <field name="serial_no"/>
+                            <field name="company_id"/>
+                            <!-- Añade otros campos de maintenance.equipment que desees mostrar -->
+                        </tree>                        
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
