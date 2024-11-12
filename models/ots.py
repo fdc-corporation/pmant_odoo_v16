@@ -321,6 +321,8 @@ class OTS(models.Model):
                 # Ensure the current user has an associated partner
                 if self.env.user.partner_id:
                     partner_ids.append(self.env.user.partner_id.id)
+                if record.user_id:
+                    partner_ids.append(record.user_id.partner_id.id)
                 else:
                     raise UserError(_("El usuario actual '%s' no tiene un partner asociado.") % self.env.user.name)
 
