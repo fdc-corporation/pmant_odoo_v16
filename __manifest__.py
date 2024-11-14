@@ -83,13 +83,8 @@
     'assets': {
         'web.assets_frontend': [
             'pmant/static/src/css/sedes_portal.css',
-<<<<<<< HEAD
-#            'pmant/static/src/css/equipos_sede.css',
-#            'pmant/static/src/css/detalles_equipo.css',
-=======
             # 'pmant/static/src/css/equipos_sede.css',
             # 'pmant/static/src/css/detalles_equipo.css',
->>>>>>> v17
         ],
     },
     'installable': True,
