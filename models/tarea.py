@@ -5,12 +5,18 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class AdjuntoEvaluacion (models.Model):
     _name = 'adjunto.evaluacion'
     _description = 'Adjuntos de evaluación'
 
     tarea  = fields.Many2one('tarea.mantenimiento', string="Tarea", invisible=True)
     adjuntoimage     = fields.Binary()
+
+class AttchmentReporte (models.Model):
+    _inherit = 'ir.attachment'
+
+    id_equipo = fields.Many2one('maintenance.equipment', string="Equipo")
 
 
 class TipoTarea(models.Model):
@@ -41,14 +47,14 @@ class Tarea(models.Model):
     dni = fields.Char(string="DNI del Firmante")
     is_admin = fields.Boolean(compute="_is_admin", default=True)
     comentario = fields.Text('Comentario del firmante')
-    creado_por = fields.Many2one('res.user', string="Creado por")
+    creado_por = fields.Many2one('res.users', string="Creado por")
     fecha_entrada = fields.Date( string="Fecha de ingreso", compute="_fecha_entrada")
     create_user     = fields.Many2one('res.users', string='Creado por', default=lambda self: self.env.user)
     compania        = fields.Many2one('res.company', string='Compañía', default=lambda self: self.env.company)
     comentario_tecnico = fields.Text(string="Comentario ingreso")
     adjuntos_evaluaciones     = fields.One2many("adjunto.evaluacion", 'tarea', string='Adjuntos de Evaluacion')
     id_tipo = fields.Integer()
-
+    fecha_hoy = fields.Char(string="Fecha Formateada", compute="_fecha_formateada")
 
     @api.onchange('tipo')
     def tipo_click(self):
@@ -58,7 +64,33 @@ class Tarea(models.Model):
             else:
                 record.id_tipo = 0
 
+    @api.model
+    def _fecha_formateada(self):
+        # Diccionario para traducir el mes al español
+        meses_espanol = {
+            "January": "enero", "February": "febrero", "March": "marzo",
+            "April": "abril", "May": "mayo", "June": "junio",
+            "July": "julio", "August": "agosto", "September": "septiembre",
+            "October": "octubre", "November": "noviembre", "December": "diciembre"
+        }
+        
+        # Obtener la fecha actual
+        fecha_actual = datetime.now()
+        # Formatear la fecha con el mes en inglés y luego traducir
+        fecha_formateada = fecha_actual.strftime("Lima, %d de %B del %Y")
+        
+        # Obtener el nombre del mes en inglés y buscar su traducción en el diccionario
+        mes_en_ing = fecha_actual.strftime("%B")
+        mes_en_espanol = meses_espanol.get(mes_en_ing, mes_en_ing)  # Usa el mes en inglés si no se encuentra en el diccionario
+        fecha_formateada = fecha_formateada.replace(mes_en_ing, mes_en_espanol)
 
+        # Asignar la fecha formateada a los registros
+        for record in self:
+            record.fecha_hoy = fecha_formateada
+            for plan in record.planequipo:
+                plan.fecha_hoy = fecha_formateada  # Asegúrate de que el campo exista en el modelo relacionado
+
+        
     @api.model
     def create(self, vals):
         record = super(Tarea, self).create(vals)
@@ -158,6 +190,11 @@ class Tarea(models.Model):
                     if alertas:
                         event.alarm_ids = [(4, alarma.id) for alarma in alertas]
 
+    # @api.multi
+    
+            
+
+   
     # @api.onchange('state_id')
     # def fecha_prox_equipo(self):
     #     for record in self:

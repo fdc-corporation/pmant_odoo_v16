@@ -1,5 +1,11 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from datetime import datetime, timedelta
+import base64
+from odoo.exceptions import UserError
+from odoo import http
+from odoo.http import request
+import requests
+from bs4 import BeautifulSoup
 
 class PlanEquipo(models.Model):
     _name = 'planequipo.mantenimiento'
@@ -18,6 +24,7 @@ class PlanEquipo(models.Model):
     fecha_ejecprox = fields.Date(compute="_generate_tecnico", store=True)
     avisado = fields.Boolean(default=False)
     estado = fields.Char(string="Estado", related="tarea.state_id.name")
+    fecha_hoy = fields.Char(string="Fecha Formateada")
 
     @api.depends('fecha_ejec')
     def _generate_tecnico(self):
@@ -52,3 +59,27 @@ class PlanEquipo(models.Model):
                 }))
             self.procesos = procesos_list
 
+
+
+    def _create_certificado_operatividad(self):
+        ir_actions_report_sudo = self.env['ir.actions.report'].sudo()
+        statement_report_action = self.env.ref('pmant.action_reporte_cert_operatividad')
+        for statement in self:
+            statement_report = statement_report_action.sudo()
+            content, _content_type = ir_actions_report_sudo._render_qweb_pdf(statement_report, res_ids=statement.ids)
+            self.env['ir.attachment'].create({
+                'name': "Certificado-operatividad",
+                'type': 'binary',
+                'mimetype': 'application/pdf',
+                'raw': content,
+                'res_model': statement._name,
+                'res_id': statement.id,
+            })
+
+
+
+
+   
+    def create_certificado_operatividad(self):
+        self._create_certificado_operatividad()
+        return self.env.ref('pmant.action_reporte_cert_operatividad').report_action(self)

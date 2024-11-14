@@ -27,6 +27,7 @@
         'security/ir.model.access.csv',
         'views/reportes/hoja_recepcion.xml',
         'views/reportes/report_acta.xml',
+        'views/reportes/report_certificado_operatividad.xml',
         'views/ots.xml',
         'views/views.xml',
         'views/templates.xml',
@@ -34,7 +35,6 @@
         'views/herencia.xml',
         'views/configuracion.xml',
         'views/wizard.xml',
-        'views/reportes/report_certificado_operatividad.xml',
         # 'views/reportecertificado.xml',
         'views/reporteticket.xml',
 	    'views/planequipo_reporte.xml',
@@ -60,6 +60,7 @@
         'views/web/form_solicitud.xml',        
         'views/web/error_template.xml',
         'views/web/reporte_sede_equipos_template.xml',
+        'views/web/equipos_central.xml',
             
         # CODIGO - VENTAS A PMANT SERVICIOS
         'views/ventas/create_mantenimiento.xml',
@@ -82,12 +83,13 @@
     'assets': {
         'web.assets_frontend': [
             'pmant/static/src/css/sedes_portal.css',
-            'pmant/static/src/css/equipos_sede.css',
-            'pmant/static/src/css/detalles_equipo.css',
+            # 'pmant/static/src/css/equipos_sede.css',
+            # 'pmant/static/src/css/detalles_equipo.css',
         ],
     },
     'installable': True,
     'application': False,
+    'license': 'LGPL-3',
 
 }
 
