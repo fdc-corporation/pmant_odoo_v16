@@ -198,90 +198,54 @@ class OTS(models.Model):
 
 
     def set_firma_cliente_mantenimiento(self):
-        # Buscar la vista que contiene la plantilla QWeb
-        view = self.env['ir.ui.view'].search([('key', '=', 'pmant.report_ots_view')], limit=1)
 
-        if not view:
-            raise UserError(_("No se encontró la vista para el reporte."))
-
-        # Renderizar el contenido HTML de la plantilla QWeb
-        html_content = self.env['ir.ui.view']._render_template(view.id, {
-            'docs': self,  # Pasar los datos del registro
-        })
-
-        if not html_content:
-            raise UserError(_("No se pudo generar el contenido del reporte en HTML."))
-
-        try:
-            # Convertir el HTML en PDF usando wkhtmltopdf
-            pdf_content = self.env['ir.actions.report']._run_wkhtmltopdf([html_content])
-
-            if not pdf_content:
-                raise UserError(_("No se pudo generar el PDF."))
-
+        ir_actions_report_sudo = self.env['ir.actions.report'].sudo()
+        statement_report_action = self.env.ref('pmant.action_mantenimiento_ot')
+        for statement in self:
+            statement_report = statement_report_action.sudo()
+            content, _content_type = ir_actions_report_sudo._render_qweb_pdf(statement_report, res_ids=statement.ids)
+           
             # Crear el adjunto con el PDF generado
             attachment = self.env['ir.attachment'].create({
                 'name': 'OT ' + self.name,
                 'type': 'binary',
-                'datas': base64.b64encode(pdf_content),
                 'mimetype': 'application/pdf',
+                'raw': content,
                 'res_model': 'sign.template',  # Asociar al modelo sign.template
-                'res_id': None,  # No se asocia a un registro específico en este momento
+                'res_id': None,
             })
 
-            # Asegurarse de que se ha creado correctamente el adjunto
-            if not attachment:
-                raise UserError(_("No se pudo crear el adjunto con el PDF."))
-
-            # Crear la plantilla de firma, asegurándose de que no haya campos no válidos
             vals_template = {
                 'name': 'OT ' + self.name,
                 'attachment_id': attachment.id,  # Asociar el adjunto creado
             }
 
-            # Eliminar 'attachment_count' si está presente en los valores
             vals_template.pop('attachment_count', None)
 
-            # Crear la plantilla de firma sin 'attachment_count'
             sign_template = self.env['sign.template'].create(vals_template)
 
             # Redirigir al formulario del sign.template
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'OT ' + self.name,
-                'res_model': 'sign.template',
-                'view_mode': 'kanban',  # Esto es para ver primero la lista (tree)
-                'target': 'current',
-            }
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'OT ' + self.name,
+            'res_model': 'sign.template',
+            'view_mode': 'kanban',  # Esto es para ver primero la lista (tree)
+            'target': 'current',
+        }
 
-        except Exception as e:
-            raise UserError(_("Error al generar el PDF: %s") % e)
 
   
     def set_firma_empresa_acta(self):
-        try:
-            # Obtener el reporte desde ir.actions.report
-            report = self.env.ref('pmant.formato_acta_conformidad')  # Asegúrate de que este sea el XMLID correcto
-
-            # Asegúrate de que se obtiene un objeto válido
-            if not report:
-                raise UserError(_("No se pudo encontrar el reporte con el XMLID especificado."))
-            time.sleep(2)
-            html_content = self.env['ir.ui.view']._render_template(report.id, {
-                'docs': self,  # Pasar los datos del registro
-            })
-            time.sleep(5)
-            # Generar el PDF utilizando el método correcto de ir.actions.report
-            pdf_content = self.env['ir.actions.report']._run_wkhtmltopdf([html_content])
-
-            if not pdf_content:
-                raise UserError(_("No se pudo generar el PDF."))
-
-            # Crear el adjunto con el PDF generado
+        ir_actions_report_sudo = self.env['ir.actions.report'].sudo()
+        statement_report_action = self.env.ref('pmant.action_reporte_acta')
+        for statement in self:
+            statement_report = statement_report_action.sudo()
+            content, _content_type = ir_actions_report_sudo._render_qweb_pdf(statement_report, res_ids=statement.ids)
+            
             attachment = self.env['ir.attachment'].create({
                 'name': 'Acta - ' + self.name,
                 'type': 'binary',
-                'datas': base64.b64encode(pdf_content),
+                'raw': content,
                 'mimetype': 'application/pdf',
                 'res_model': 'sign.template',  # Asociar al modelo sign.template
                 'res_id': None,  # No se asocia a un registro específico en este momento
@@ -299,17 +263,13 @@ class OTS(models.Model):
             sign_template = self.env['sign.template'].create(vals_template)
 
             # Redirigir al formulario de sign.template
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Acta - ' + self.name,
-                'res_model': 'sign.template',
-                'view_mode': 'kanban',  # Esto es para ver primero la lista (tree)
-                'target': 'current',
-            }
-
-        except Exception as e:
-            raise UserError(_("Error al generar el PDF: %s") % str(e))
-
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Acta - ' + self.name,
+            'res_model': 'sign.template',
+            'view_mode': 'kanban',  # Esto es para ver primero la lista (tree)
+            'target': 'current',
+        }
 
 
 

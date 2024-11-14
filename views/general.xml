@@ -154,7 +154,15 @@
                                 <field name="tipo"/>
                                 <field name="ubicacion" domain="[('parent_id','=',cliente)]"/>
                             </group>
-                            <field name="planequipo" readonly="not id" context="{'default_cliente': cliente, 'default_ubicacion': ubicacion , 'default_tarea': id}"/>
+                            <field name="planequipo" readonly="not id" context="{'default_cliente': cliente, 'default_ubicacion': ubicacion , 'default_tarea': id}">
+                                <tree>
+                                    <field name="equipo" />
+                                    <field name="plan" />
+                                    <field name="fecha_ejec" />
+                                    <field name="estado" />
+                                    <button name="create_certificado_operatividad" string="Generar Certificado" type="object" class="btn-primary"/>
+                                </tree>
+                            </field>
                         </group>
                         <notebook>
                             <page name="firma" string="Datos del firmante">
@@ -164,6 +172,7 @@
                                     <field name="comentario"/>
                                     <field name="archive" invisible="1"/>
                                     <field name="id_tipo" invisible="1"/>
+                                    <field name="fecha_hoy" invisible="1"/>
                                 </group>
                             </page>
                             <page name="calificacion" string="Calificaciones">

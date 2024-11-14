@@ -38,6 +38,8 @@
 						<field name="plan" string="Plan de mantenimiento"  readonly="not is_admin" />
 						<field name="fecha_ejec" />
 						<field name="fecha_ejecprox" string="Proxima Fecha de Mantenimiento" />
+						<field name="fecha_hoy" invisible="1"/>
+
 					</group>
 					<field name="procesos" invisible="is_admin">
 						<tree responsive="1">

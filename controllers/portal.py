@@ -43,48 +43,74 @@ class PortalPmant(http.Controller):
                 'total_paginas': total_paginas,
             })
         else:
-            return request.redirect(f"/my/{user_partner.id}/equipos/")
+            return request.redirect(f"/my/sede/{user_partner.id}/equipos/")
 
 
 
 
     # EQUIPOS POR SEDES - REGISTRADO A LA UBICACION
     @http.route([
-    '/my/sedes/<int:sede_id>/equipos/', 
-    '/my/sedes/<int:sede_id>/equipos/page/<int:pagina>'
+        '/my/sede/<int:sede_id>/equipos/', 
+        '/my/sede/<int:sede_id>/equipos/page/<int:pagina>'
     ], type="http", auth="user", website=True)
     def equipos_sede(self, sede_id, filtro=None, pagina=1, **kw):
+        # Número de registros por página
         per_page = 20
         domain = [('ubicacion', '=', sede_id)]
 
+        # Aplicar filtro si existe
         if filtro:
             domain.append(('name', 'ilike', filtro))
 
-        total = request.env['maintenance.equipment'].sudo().search_count(domain)
-        equipos = request.env['maintenance.equipment'].sudo().search(domain, offset=(pagina-1)*per_page, limit=per_page)
-    
-        pager = request.website.pager(
-            url='/my/sedes/%s/equipos/' % sede_id,
-            total=total,
-            page=pagina,
-            step=per_page,
-            scope=7,
-            url_args={'filtro': filtro}
-        )
+        # Calcular el total de equipos y el número total de páginas
+        total_equipos = request.env['maintenance.equipment'].sudo().search_count(domain)
+        total_paginas = math.ceil(total_equipos / per_page)
+
+        # Calcular el offset para la página actual
+        offset = (pagina - 1) * per_page
+
+        # Obtener los equipos para la página actual
+        equipos = request.env['maintenance.equipment'].sudo().search(domain, limit=per_page, offset=offset)
+        ubicacion = request.env['res.partner'].sudo().browse(sede_id)
 
         return request.render('pmant.equipos_sede', {
             'equipos': equipos,
-            'pager': pager,
-            'filtro': filtro
+            'ubicacion': ubicacion,
+            'filtro': filtro,
+            'pagina_actual': pagina,
+            'total_paginas': total_paginas,
         })
 
 
+    # EQUIPOS REGISTRADOS AL USUARIO DE LA CENTRAL
+    @http.route(['/my/<int:empresa_id>/equipos/', '/my/<int:empresa_id>/equipos/page/<int:pagina>'], type="http", auth="user", website=True)
+    def equipos_portal(self, empresa_id, pagina=1):
+        user_partner = request.env.user.partner_id
+        per_page = 20  # Número de registros por página
 
-    # EQUIPOS REGISTRADOS AL USUARIO DE LA UBICACION (SEDE)
-    @http.route(['/my/<int:sede_id>/equipos/'], type="http", auth="user", website=True)
-    def equipos_portal(self, sede_id):
-        equipos = request.env['maintenance.equipment'].sudo().search([('ubicacion', '=', sede_id)])
-        return request.render('pmant.equipos_sede', {'equipos': equipos})
+        # Definir el dominio para la búsqueda
+        domain = [
+            ('propietario', '=', empresa_id),
+            ('ubicacion', '=', False)
+        ]
+
+        # Obtener el total de registros y calcular el número de páginas
+        total_equipos = request.env['maintenance.equipment'].sudo().search_count(domain)
+        total_paginas = math.ceil(total_equipos / per_page)
+
+        # Calcular el offset para la página actual
+        offset = (pagina - 1) * per_page
+
+        # Obtener los equipos para la página actual
+        equipos = request.env['maintenance.equipment'].sudo().search(domain, limit=per_page, offset=offset)
+
+        return request.render('pmant.equipos_central', {
+            'equipos': equipos,
+            'user_partner': user_partner,
+            'pagina_actual': pagina,
+            'total_paginas': total_paginas,
+            'empresa_id': empresa_id
+        })
 
 
 
@@ -237,6 +263,21 @@ class PortalPmant(http.Controller):
             ('Content-Type', 'application/pdf'),
             ('Content-Length', len(pdf)),
             ('Content-Disposition', f'attachment; filename="Reporte_Sede_Equipos.pdf"')
+        ]
+
+        # Retornar la respuesta para descargar el archivo
+        return request.make_response(pdf, headers=pdfhttpheaders)
+
+    @http.route(['/download/planequipo/<int:planequipo>'], type='http', auth='public', website=True)
+    def download_plaequipo(self, planequipo):
+        # Renderizar el PDF pasando el ID de la ubicación como una lista
+        pdf = request.env.ref('pmant.action_reporte_cert_operatividad').sudo()._render_qweb_pdf([planequipo])
+
+        # Definir las cabeceras para la descarga del PDF
+        pdfhttpheaders = [
+            ('Content-Type', 'application/pdf'),
+            ('Content-Length', len(pdf)),
+            ('Content-Disposition', f'attachment; filename="Certificafo-operatividad.pdf"')
         ]
 
         # Retornar la respuesta para descargar el archivo
