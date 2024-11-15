@@ -68,12 +68,13 @@ class PlanEquipo(models.Model):
             statement_report = statement_report_action.sudo()
             content, _content_type = ir_actions_report_sudo._render_qweb_pdf(statement_report, res_ids=statement.ids)
             self.env['ir.attachment'].create({
-                'name': "Certificado-operatividad",
+                'name': "Certificado-operatividad-" + statement.equipo.name,
                 'type': 'binary',
                 'mimetype': 'application/pdf',
                 'raw': content,
                 'res_model': statement._name,
                 'res_id': statement.id,
+                'id_equipo': statement.equipo.id,
             })
 
 

@@ -55,7 +55,7 @@ class PortalPmant(http.Controller):
     ], type="http", auth="user", website=True)
     def equipos_sede(self, sede_id, filtro=None, pagina=1, **kw):
         # Número de registros por página
-        per_page = 20
+        per_page = 15
         domain = [('ubicacion', '=', sede_id)]
 
         # Aplicar filtro si existe
@@ -86,14 +86,14 @@ class PortalPmant(http.Controller):
     @http.route(['/my/<int:empresa_id>/equipos/', '/my/<int:empresa_id>/equipos/page/<int:pagina>'], type="http", auth="user", website=True)
     def equipos_portal(self, empresa_id, pagina=1):
         user_partner = request.env.user.partner_id
-        per_page = 20  # Número de registros por página
+        per_page = 15  # Número de registros por página
 
         # Definir el dominio para la búsqueda
         domain = [
             ('propietario', '=', empresa_id),
             ('ubicacion', '=', False)
         ]
-
+        ubicaciones = request.env['res.partner'].sudo().search([('parent_id', '=', user_partner.id)])
         # Obtener el total de registros y calcular el número de páginas
         total_equipos = request.env['maintenance.equipment'].sudo().search_count(domain)
         total_paginas = math.ceil(total_equipos / per_page)
@@ -109,44 +109,62 @@ class PortalPmant(http.Controller):
             'user_partner': user_partner,
             'pagina_actual': pagina,
             'total_paginas': total_paginas,
+            'ubicaciones' : ubicaciones,
             'empresa_id': empresa_id
         })
 
+    @http.route(['/solicitud/equipo/'], type='http', auth="user", methods=['POST'], website=True)
+    def solicitud_registro_equipo (self, **kwargs):
+        # Recuperar los valores enviados desde el formulario
+        ubicacion_id = kwargs.get('ubicacion_id')  # ID de la ubicación
+        nombre_equipo = kwargs.get('nombre_equipo')  # Nombre del equipo
+        marca_equipo = kwargs.get('marca_equipo')  # Marca del equipo
+        modelo_equipo = kwargs.get('modelo')  # Marca del equipo
+        numero_serie = kwargs.get('numero_serie')  # Número de serie
+        fecha_registro = kwargs.get('fecha_registro')  # Fecha de registro
+        imagen = kwargs.get('formFileMultiple')  # Archivo subido
+        user_partner = request.env.user.partner_id
+
+        # Validar que todos los campos requeridos estén presentes
+        if not (nombre_equipo and marca_equipo and modelo_equipo and numero_serie and fecha_registro):
+            return request.render('pmant.error_template', {'error': 'Todos los campos son obligatorios.'})
+        image_data = base64.b64encode(imagen.read()) if imagen else False
+        # Crear el equipo en el modelo maintenance.equipment
+        equipment = request.env['maintenance.equipment'].sudo().create({
+            'propietario': int(user_partner),
+            'ubicacion': int(ubicacion_id) if ubicacion_id else None,
+            'name': nombre_equipo,
+            'marca': marca_equipo,
+            'marca': modelo_equipo,
+            'model': numero_serie,
+            'effective_date': fecha_registro,
+            'image': image_data  # Leer contenido del archivo
+        })
+        if ubicacion_id :
+            return request.redirect(f"/my/sede/{int(ubicacion_id)}/equipos/")
+
+        # Redirigir a una página de éxito o mostrar un mensaje
+        return request.redirect(f"/my/{user_partner.id}/equipos/")
 
 
     # REGISTROS - DETALLES DEL EQUIPO
 
-    @http.route(['/my/equipos/<int:equipo_id>', '/my/equipos/<int:equipo_id>/page/<int:pagina>'], type="http", auth="user", website=True)
+    @http.route(['/my/equipos/<int:equipo_id>/detalles'], type="http", auth="user", website=True)
     def detalle_equipo(self, equipo_id, filtro=None, pagina=1, **kw):
+        user_partner = request.env.user.partner_id
         equipo = request.env['maintenance.equipment'].sudo().browse(equipo_id)
-        adjuntos = equipo.adjunto
-        domain = [('equipo', '=', equipo_id)]
-        per_page = 15
-
-        if filtro:
-            try:
-                domain.append(('estado', '=', filtro))
-            except ValueError:
-                pass
-
-        total = request.env['planequipo.mantenimiento'].sudo().search_count(domain)
-        planequipo = request.env['planequipo.mantenimiento'].sudo().search(
-            domain, offset=(pagina - 1) * per_page, limit=per_page)
-
-        pager = request.website.pager(
-            url='/my/equipos/%s' % equipo_id,
-            total=total,
-            page=pagina,
-            step=per_page,
-            url_args={'filtro': filtro},
-        )
-
         return request.render('pmant.detalle_equipo', {
             'equipo': equipo,
-            'planequipo': planequipo,
-            'pager': pager,
-            'filtro': filtro,
         })
+
+    
+    @http.route(['/my/equipo/<int:equipo_id>/historial'], type="http", auth="user", website=True)
+    def historial_mantenimiento (self, equipo_id):
+        equipo = request.env['maintenance.equipment'].sudo().browse(equipo_id)
+        return request.render('pmant.historial_mantenimiento', {'equipo': equipo})
+
+
+
 
 
 

@@ -71,7 +71,8 @@
                         <t t-if="len(sedes) > 0">
                             <t t-foreach="sedes" t-as="sede">
                                 <a t-att-href="'/my/sede/' + str(sede.id) + '/equipos'" class="card-sede">
-                                    <img t-att-src="'/web/image/res.partner/' + str(sede.id) + '/image_1920'" alt="Sede Image" />
+                                    <img t-att-src="'/web/image?model=res.partner&amp;id=%s&amp;field=image_1920' % sede.id" alt="Sede Image"/>
+
                                     <div class="text-card-sede">
                                         <span t-esc="sede.name" />
                                         <span t-esc="sede.email" />

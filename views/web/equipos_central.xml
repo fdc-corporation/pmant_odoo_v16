@@ -105,11 +105,19 @@
 					</div>
 				</div>
 				<div class="main-card-equipos">
+					<div class="titulo-seccion">
+						<h2>
+							Mis Equipos
+						</h2>
+						<button href="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							Solicitar registro
+						</button>
+					</div>
 					<div class="main-equipos">
 						<t t-if="len(equipos) > 0">
 							<t t-foreach="equipos" t-as="equipo">
 								<a t-att-href="'/my/equipos/' + str(equipo.id) + '/detalles'" class="card-equipo">
-									<img t-att-src="'/web/image/maintenance.equipment/' + str(equipo.id) + '/image'" alt="Sede Image" />
+                                    <img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=image' % equipo.id" alt="Sede Image"/>
 									<div class="text-card-equipo">
 										<span t-esc="equipo.name" />
 										<span t-esc="equipo.marca" />
@@ -152,6 +160,58 @@
 								</li>
 							</ul>
 						</nav>
+					</div>
+					<!-- Model de Solicitud de registro de equipo nuevo -->
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" style="max-width: 500px !important;">
+							<div class="modal-content">
+								<form action="/solicitud/equipo" method="POST" enctype="multipart/form-data">
+									<div class="modal-header">
+										<div>
+											<h3 class="modal-title text-primary" id="exampleModalLabel">
+												Formulario de Solicitud
+											</h3>
+											<p style="font-size:12px;">
+												si desea registrar un equipo en la central de su
+												empresa tendras que dejar la ubicacion en blanco
+											</p>
+										</div>
+										<!--
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+										</button>
+										-->
+									</div>
+									<div class="modal-body">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+										<select name="ubicacion_id" class="form-control">
+											<option value="">
+												Seleccione una ubicación
+											</option>
+											<t t-foreach="ubicaciones" t-as="ubicacion">
+												<option t-att-value="ubicacion.id">
+													<t t-esc="ubicacion.name" />
+												</option>
+											</t>
+										</select>
+										<input type="text" name="nombre_equipo" placeholder="Nombre del equipo" />
+										<input type="text" name="marca_equipo" placeholder="Marca del equipo" />
+										<input type="text" name="modelo" placeholder="Modelo del equipo" />
+										<input type="text" name="numero_serie" placeholder="N° de serie" />
+										<input type="date" name="fecha_registro" placeholder="Fecha de registro" />
+										<input class="form-control" type="file" name="formFileMultiple" id="formFileMultiple" />
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary">
+											Enviar
+										</button>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+											Cerrar
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

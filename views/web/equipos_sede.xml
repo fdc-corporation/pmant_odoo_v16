@@ -113,8 +113,8 @@
 					<div class="main-equipos">
 						<t t-if="len(equipos) > 0">
 							<t t-foreach="equipos" t-as="equipo">
-								<a t-att-href="'/my/equipos/' + str(equipo.id)" class="card-equipo">
-									<img t-att-src="'/web/image/maintenance.equipment/' + str(equipo.id) + '/image'" alt="Sede Image" />
+								<a t-att-href="'/my/equipos/' + str(equipo.id) + '/detalles'" class="card-equipo">
+                                    <img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=image' % equipo.id" alt="Sede Image"/>
 									<div class="text-card-equipo">
 										<span t-esc="equipo.name" />
 										<span t-esc="equipo.marca" />
