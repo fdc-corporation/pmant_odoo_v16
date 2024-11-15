@@ -61,7 +61,7 @@
         'views/web/error_template.xml',
         'views/web/reporte_sede_equipos_template.xml',
         'views/web/equipos_central.xml',
-            
+        'views/web/historial_mantenimiento.xml',            
         # CODIGO - VENTAS A PMANT SERVICIOS
         'views/ventas/create_mantenimiento.xml',
         'views/ventas/sale_order_views.xml',
@@ -79,6 +79,7 @@
         'views/contacto/equipo_contacto.xml',
         # VISTAS DE MODELO DE EVENTO
         'views/eventos/eventos-mant.xml',
+        'views/adjunto/it_attchment_inherit.xml',
     ],
     'assets': {
         'web.assets_frontend': [

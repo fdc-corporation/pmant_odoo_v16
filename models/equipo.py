@@ -55,12 +55,15 @@ class Equipo(models.Model):
     anticipo     = fields.Integer(compute='_generate_f_prox')
     image        = fields.Binary("Image", attachment=True)
     # ot_correctivos = fields.Many2many('ot.correctivo')
-    
+    certificados = fields.Many2many('ir.attachment', string="Certificados de operatividad" , compute="_get_certificados")
+
+
+
     @api.model
     def _generate_qr_code(self):
         for record in self:
             base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            base_url += '/my/equipos/' + str(record.id)
+            base_url += '/my/equipos/' + str(record.id) + '/detalles'
             qr_image = generate_qr_code(base_url)
             url_qr = base_url
             
@@ -76,6 +79,13 @@ class Equipo(models.Model):
                 'url_qr': url_qr,
                 'fecha_prox': fecha_prox,
             })
+
+    def _get_certificados(self):
+        for record in self:
+            certificados = self.env['ir.attachment'].search([('id_equipo', '=', record.id)])
+            record.certificados = certificados.mapped('id')
+
+
 
 
     def generar_n_serie(self):

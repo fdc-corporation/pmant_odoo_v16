@@ -80,6 +80,18 @@
 					<page string="Adjuntos">
 						<field name="adjunto" string="Adjunto" />
 					</page>
+					<page string="Certificados">
+						<field name="certificados" string="Certificados" >
+							<tree >
+								<field name="name" string="Nombre del archivo"/>
+								<field name="type" string="Tipo de archivo"/>
+								<field name="mimetype" string="Tipo de archivo"/>
+								<field name="write_date" string="Fecha Generada"/>
+								<button name="download_file" type="object" string="Descargar archivo" />
+
+							</tree>
+						</field>
+					</page>
 					<page string="QR Imagen">
 						<group>
 							<field name="qr_image" string="QR IMAGEN" widget="image" class="col-sm-2 col-md-3" />
