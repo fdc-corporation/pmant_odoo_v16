@@ -316,17 +316,34 @@ class PortalPmant(http.Controller):
         user_partner = request.env.user.partner_id
         fdc_user = ""
         creado_por = request.env['res.groups'].search([('name', '=', 'Mantenimiento -  Vendedor')], limit=1)
-
+        usuario_vemder = creado_por.users[0].id
         lead = request.env['crm.lead'].sudo().create({
             'name' : "Solicitud de Mantenimiento - " + user_partner.name + " - " + nombre_equipo,
             'partner_id' : user_partner.id,
             'equipo_tarea' : id_equipo,
-            'ubicacion' : ubicacion_id,
-
+            'ubicacion' : int(ubicacion_id) if ubicacion_id else None,
+            'user_id' : int(usuario_vemder),
+            'description' : razon,
+        })
+        imagen_binario = base64.b64encode(imagen.read())
+        attchment = request.env['ir.attachment'].create({
+            'name' : imagen.filename, 
+            'type' : "binary",
+            'datas' : imagen_binario,
+            'datas_fname' : imagen.filename,
+            'res_model' : 'crm.lead',
+            'res_id' : lead.id,
+            'minetype' : imagen.content_type,
+            'public': True,
+        })
+        message = request.env['mail.message'].sudo().create({
+        'body': f"Imagen adjunta: <img src='/web/content/{attachment.id}' width='100'/>",
+        'model': 'crm.lead',
+        'res_id': lead.id,
+        'attachment_ids': [(4, attchment.id)],
         })
 
-
-        return ''
+        return request.redirect(f'/my/equipo/{int(id_equipo)}/historial')
 
 
 

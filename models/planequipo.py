@@ -74,7 +74,7 @@ class PlanEquipo(models.Model):
                 'raw': content,
                 'res_model': statement._name,
                 'res_id': statement.id,
-                'id_equipo': statement.equipo.id,
+                'equipo': statement.equipo.id,
             })
 
 
