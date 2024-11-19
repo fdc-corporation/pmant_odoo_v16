@@ -43,17 +43,21 @@
 								</label>
 								<h4 t-esc="equipo.name">
 								</h4>
+								<!--
 								<button href="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-									Solicitar servicio
+								Solicitar servicio
 								</button>
+								-->
 							</div>
 							<div class="img-header-equipo">
 								<img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=image' % equipo.id" alt="Imagen del equipo" />
 								<img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=qr_image' % equipo.id" alt="Qr del equipo" />
 							</div>
+							<!--
 							<button href="" type="button" class="btn btn-primary btn-mobile" data-bs-toggle="modal" data-bs-target="#exampleModal">
-								Solicitar servicio
+							Solicitar servicio
 							</button>
+							-->
 						</div>
 						<div class="descripcion-propieadades-equipo">
 							<div class="propiedades-contenedor">
@@ -95,10 +99,16 @@
 					<div class="main-sedes">
 						<t t-if="len(equipo.planequipo) > 0">
 							<t t-foreach="equipo.planequipo" t-as="plan">
-								<a t-att-href="'/my/sede/' + str(plan.id) + '/equipos'" class="card-sede">
+								<div class="card-mantenimiento">
 									<img src="/pmant/static/src/css/iconos/mantenimiento.png" alt="Imagen de mantenimiento" />
-									<div class="text-card-sede">
-										<span t-esc="plan.plan.name" />
+									<div class="text-card-mantenimiento">
+										<strong t-esc="plan.tarea.name" />
+										<span>
+											<span>
+												Plan de Mant. :
+											</span>
+											<span t-esc="plan.plan.name" />
+										</span>
 										<span>
 											<span>
 												Fecha de ejecucion :
@@ -112,13 +122,58 @@
 											<span t-esc="plan.estado" />
 										</span>
 									</div>
-								</a>
+									<a t-att-href="'/descargas/reporte/mantenimiento/%d' % plan.id" class="bg-primary">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+											<path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+											<path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+										</svg>
+									</a>
+								</div>
 							</t>
 						</t>
 						<t t-else="">
-							Lo sentimos.. al parecer no cuenta con sedes registrados a su cuenta de usuario.
+							Aun no cuenta con servicios registrados en este equipo, solicta
+							<a t-att-href="'/my/equipos/%d/detalles' % str(equipo.id)">
+								Aqui
+							</a>
+							un nuevo servicio.
 						</t>
 					</div>
+					<!-- Paginación -->
+					<nav aria-label="Paginación de Historial">
+						<ul class="pagination justify-content-center">
+							<!-- Botón Anterior -->
+							<li t-if="pagina_actual > 1" class="page-item">
+								<a t-att-href="'/my/equipo/' + str(equipo.id) + '/historial/page/' + str(pagina_actual - 1)" class="page-link">
+									« Anterior
+								</a>
+							</li>
+							<li t-if="pagina_actual &lt;= 1" class="page-item disabled">
+								<span class="page-link">
+									« Anterior
+								</span>
+							</li>
+							<!-- Números de página -->
+							<t t-foreach="range(1, total_paginas + 1)" t-as="page">
+								<li t-att-class="'page-item ' + ('active' if page == pagina_actual else '')">
+									<a t-att-href="'/my/equipo/' + str(equipo.id) + '/historial/page/' + str(page)" class="page-link">
+										<t t-esc="page" />
+									</a>
+								</li>
+							</t>
+							<!-- Botón Siguiente -->
+							<li t-if="pagina_actual &lt; total_paginas" class="page-item">
+								<a t-att-href="'/my/equipo/' + str(equipo.id) + '/historial/page/' + str(pagina_actual + 1)" class="page-link">
+									Siguiente »
+								</a>
+							</li>
+							<li t-if="pagina_actual >= total_paginas" class="page-item disabled">
+								<span class="page-link">
+									Siguiente »
+								</span>
+							</li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</t>

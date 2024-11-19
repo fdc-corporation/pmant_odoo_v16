@@ -89,11 +89,11 @@
                     <!-- Paginación -->
                     <div class="contenedor-paginacion">
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination">
+                            <ul class="pagination justify-content-center">
                                 <!-- Enlace a la página anterior -->
                                 <li t-if="pagina_actual > 1" class="page-item">
                                     <a t-att-href="'/my/sedes/page/' + str(pagina_actual - 1)" class="page-link" aria-label="Previous">
-										<span aria-hidden="true">«</span>
+										<span class="page-link">« Anterior</span>
                                     </a>
                                 </li>
 
@@ -109,7 +109,7 @@
                                 <!-- Enlace a la página siguiente -->
                                 <li t-if="pagina_actual &lt; total_paginas" class="page-item">
                                     <a t-att-href="'/my/sedes/page/' + str(pagina_actual + 1)" class="page-link" aria-label="Next">
-										<span aria-hidden="true">»</span>
+										<span class="page-link">Siguiente »</span>
                                     </a>
                                 </li>
                             </ul>

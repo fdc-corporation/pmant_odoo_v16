@@ -25,10 +25,8 @@
                         <tr class="no-wrap">
                             <td class="col-6">
                                 <strong>
-										N° de Orden:
+										Orden:
 									</strong>
-                                <span t-field="doc.sequence"/>
-									-
 									
                                 <span t-field="doc.name"/>
                             </td>
