@@ -19,7 +19,7 @@
     'version': '1.9',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale', 'web', 'product' ,'crm', 'portal' ,'mail','maintenance','hr','contacts','hr_maintenance','web_digital_sign','calendar'],
+    'depends': ['base','sale', 'web', 'product' ,'crm', 'portal' ,'mail','maintenance','hr','contacts','hr_maintenance','web_digital_sign','calendar', 'website'],
 
     # always loaded
     'data': [
@@ -79,7 +79,7 @@
         'views/contacto/equipo_contacto.xml',
         # VISTAS DE MODELO DE EVENTO
         'views/eventos/eventos-mant.xml',
-        'views/adjunto/it_attchment_inherit.xml',
+        #'views/adjunto/it_attchment_inherit.xml',
     ],
     'assets': {
         'web.assets_frontend': [

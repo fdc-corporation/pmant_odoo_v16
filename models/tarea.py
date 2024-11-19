@@ -13,6 +13,10 @@ class AdjuntoEvaluacion (models.Model):
     tarea  = fields.Many2one('tarea.mantenimiento', string="Tarea", invisible=True)
     adjuntoimage     = fields.Binary()
 
+class AttchmentReporte (models.Model):
+    _inherit = 'ir.attachment'
+
+    id_equipo = fields.Many2one('maintenance.equipment', string="Equipo")
 
 
 class TipoTarea(models.Model):
@@ -211,4 +215,5 @@ class Tarea(models.Model):
     #             self._notify_on_change()
     #             self._fecha_ejecutada()
     #             self._evento_calendario_proximo_servicio()
+
 
