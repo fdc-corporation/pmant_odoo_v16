@@ -87,7 +87,7 @@
 								<field name="type" string="Tipo de archivo"/>
 								<field name="mimetype" string="Tipo de archivo"/>
 								<field name="write_date" string="Fecha Generada"/>
-								<button name="download_file" type="object" string="Descargar archivo" />
+								<!-- <button name="download_file" type="object" string="Descargar archivo" /> -->
 
 							</tree>
 						</field>

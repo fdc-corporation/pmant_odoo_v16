@@ -14,7 +14,10 @@ class Adjunto(models.Model):
         mimetype, _ = mimetypes.guess_type(filename)
         return mimetype or 'application/octet-stream'
 
+class Adjunto_Atchmento(models.Model):
+    _inherit = 'ir.attachment'
 
+    id_equipo       = fields.Many2one('maintenance.equipment',string='Equipo')
 
 # class AdjuntoImagw(models.Model):
 #     _name        = 'adjuntoimage.mantenimiento'
