@@ -214,7 +214,7 @@
 								</label>
 								<h4 t-esc="equipo.name">
 								</h4>
-								<button href="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								<button href="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Model_Solicitud">
 									Solicitar servicio
 								</button>
 							</div>
@@ -222,7 +222,7 @@
 								<img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=image' % equipo.id" alt="Imagen del equipo" />
 								<img t-att-src="'/web/image?model=maintenance.equipment&amp;id=%s&amp;field=qr_image' % equipo.id" alt="Qr del equipo" />
 							</div>
-							<button href="" type="button" class="btn btn-primary btn-mobile" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<button href="" type="button" class="btn btn-primary btn-mobile" data-bs-toggle="modal" data-bs-target="#Model_Solicitud">
 								Solicitar servicio
 							</button>
 						</div>
@@ -332,6 +332,49 @@
 							<span>Certificados de <br></br> operatividad</span>
 						</a>
 						<br></br>
+					</div>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="Model_Solicitud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="max-width: 500px !important;">
+					<div class="modal-content">
+						<form action="/solicitud/mantenimiento/servicio" method="POST" enctype="multipart/form-data">
+							<div class="modal-header">
+								<div>
+									<h3 class="modal-title text-primary" id="exampleModalLabel">
+										Formulario de Servicios
+									</h3>
+									<p style="font-size:12px;">
+										Este formulario es netamente usado para solicitar servicios de emergencias y/o programar servicios del equipo
+									</p>
+								</div>
+								<!--
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+								</button>
+								-->
+							</div>
+							<div class="modal-body">
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+								<input type="hidden" name="id_equipo" t-att-value="equipo.id" />
+								<input type="hidden" name="ubicacion_id" t-att-value="equipo.ubicacion.id" />
+								<input type="text" name="ubicacion" t-att-value="equipo.ubicacion.name" disabled="disabled"  placeholder="Ubicacion del Equipo" />
+								<input type="text" name="nombre_equipo" t-att-value="equipo.name" disabled="disabled"  placeholder="Nombre del equipo" />
+								<input type="text" name="marca_equipo" t-att-value="equipo.marca" disabled="disabled"   placeholder="Marca del equipo" />
+								<input type="text" name="modelo" t-att-value="equipo.model" disabled="disabled"  placeholder="Modelo del equipo" />
+								<input type="text" name="numero_serie" t-att-value="equipo.serial_no" disabled="disabled"   placeholder="N° de serie" />
+								<textarea placeholder="Detalles del problema" name="razon" rows="4"   ></textarea>
+								<input class="form-control" type="file" name="formFileMultiple" id="formFileMultiple" />
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">
+									Enviar
+								</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+									Cerrar
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

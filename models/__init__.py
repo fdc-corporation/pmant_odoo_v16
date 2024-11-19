@@ -7,7 +7,7 @@ from . import planequipo
 from .  import proceso
 from . import plantilla
 from . import tarea
-# from . import adjuntos
+from . import adjuntos
 from . import parametros
 from . import ventas_mant
 from . import wizard
