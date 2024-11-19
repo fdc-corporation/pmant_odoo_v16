@@ -133,7 +133,7 @@
 						</t>
 						<t t-else="">
 							Aun no cuenta con servicios registrados en este equipo, solicta
-							<a t-att-href="'/my/equipos/%d/detalles' % str(equipo.id)">
+							<a t-att-href="'/my/equipos/%d/detalles' % equipo.id">
 								Aqui
 							</a>
 							un nuevo servicio.

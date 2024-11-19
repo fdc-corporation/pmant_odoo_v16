@@ -359,10 +359,31 @@
 								<input type="hidden" name="id_equipo" t-att-value="equipo.id" />
 								<input type="hidden" name="ubicacion_id" t-att-value="equipo.ubicacion.id" />
 								<input type="text" name="ubicacion" t-att-value="equipo.ubicacion.name" disabled="disabled"  placeholder="Ubicacion del Equipo" />
+								<select name="tipo_servicio" class="form-control">
+									<option value="">
+										Seleccionar tipo de Servicio
+									</option>
+										<option value="">
+											Select. Servicio
+										</option>
+										<option value="Preventivo">
+											Preventivo
+										</option>
+										<option value="Instalación">
+											Instalación
+										</option>
+										<option value="Mantenimiento">
+											Mantenimiento
+										</option>
+										<option value="Modificación">
+											Modificación
+										</option>
+								</select>
 								<input type="text" name="nombre_equipo" t-att-value="equipo.name" disabled="disabled"  placeholder="Nombre del equipo" />
 								<input type="text" name="marca_equipo" t-att-value="equipo.marca" disabled="disabled"   placeholder="Marca del equipo" />
 								<input type="text" name="modelo" t-att-value="equipo.model" disabled="disabled"  placeholder="Modelo del equipo" />
 								<input type="text" name="numero_serie" t-att-value="equipo.serial_no" disabled="disabled"   placeholder="N° de serie" />
+								<input type="date" name="fecha_servicio" placeholder="Fecha de Servicio" />
 								<textarea placeholder="Detalles del problema" name="razon" rows="4"   ></textarea>
 								<input class="form-control" type="file" name="formFileMultiple" id="formFileMultiple" />
 							</div>
