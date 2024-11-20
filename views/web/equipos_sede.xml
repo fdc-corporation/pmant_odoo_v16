@@ -110,6 +110,9 @@
 					</div>
 				</div>
 				<div class="main-card-equipos">
+					<div>
+                        <h3>Mis Sedes</h3>
+                    </div>
 					<div class="main-equipos">
 						<t t-if="len(equipos) > 0">
 							<t t-foreach="equipos" t-as="equipo">

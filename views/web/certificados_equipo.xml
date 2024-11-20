@@ -96,6 +96,9 @@
 					</div>
 				</div>
 				<div class="main-card-sedes">
+                    <div>
+                        <h3>Certificados de Operatividad</h3>
+                    </div>
 					<div class="main-adjuntos">
 						<t t-if="len(equipo.certificados) > 0">
 							<t t-foreach="equipo.certificados" t-as="adjunto">
