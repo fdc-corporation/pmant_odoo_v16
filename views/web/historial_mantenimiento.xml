@@ -100,27 +100,29 @@
 						<t t-if="len(equipo.planequipo) > 0">
 							<t t-foreach="equipo.planequipo" t-as="plan">
 								<div class="card-mantenimiento">
-									<img src="/pmant/static/src/css/iconos/mantenimiento.png" alt="Imagen de mantenimiento" />
-									<div class="text-card-mantenimiento">
-										<strong t-esc="plan.tarea.name" />
-										<span>
+									<div style="display:flex; gap:5px;align-items:center;">
+										<img src="/pmant/static/src/css/iconos/mantenimiento.png" alt="Imagen de mantenimiento" />
+										<div class="text-card-mantenimiento">
+											<strong t-esc="plan.tarea.name" />
 											<span>
-												Plan de Mant. :
+												<span>
+													Plan de Mant. :
+												</span>
+												<span t-esc="plan.plan.name" />
 											</span>
-											<span t-esc="plan.plan.name" />
-										</span>
-										<span>
 											<span>
-												Fecha de ejecucion :
+												<span>
+													Fecha de ejecucion :
+												</span>
+												<span t-esc="plan.fecha_ejec" />
 											</span>
-											<span t-esc="plan.fecha_ejec" />
-										</span>
-										<span>
 											<span>
-												Etapa :
+												<span>
+													Etapa :
+												</span>
+												<span t-esc="plan.estado" />
 											</span>
-											<span t-esc="plan.estado" />
-										</span>
+										</div>
 									</div>
 									<a t-att-href="'/descargas/reporte/mantenimiento/%d' % plan.id" class="bg-primary">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">

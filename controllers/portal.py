@@ -285,7 +285,7 @@ class PortalPmant(http.Controller):
 
 
 
-
+    # RUTA PARA LOS ADJUNTOS DEL EQUIPO
     @http.route(['/descargas/adjuntos/equipo/<int:id_adjunto>'], type="http", auth="user", website=True)
     def descarga_adjuntos_equipo(self, id_adjunto):
         adjunto = request.env['adjunto.mantenimiento'].sudo().browse(id_adjunto)
@@ -304,6 +304,26 @@ class PortalPmant(http.Controller):
 
         return request.make_response(file_content_decoded, headers=headers)
 
+
+    # RUTA PARA LOS CERTIFICADOS DE OPERATIVIDAD DEL EQUIPO
+    @http.route(['/my/equipo/<int:id_equipo>/certificados'], type="http", auth="user", website=True)
+    def certificados_operatividad_equipo (self,id_equipo):
+        equipo = request.env['maintenance.equipment'].sudo().browse(id_equipo)
+        return request.render('pmant.certificados_equipo', {'equipo' : equipo})
+
+    # RUTA PARA LOS ADJUNTOS DEL EQUIPO
+    @http.route(['/descargas/certificado/equipo/<int:id_adjunto>'], type="http", auth="user", website=True)
+    def descarga_certificado_equipo(self, id_adjunto):
+        attachment = request.env['ir.attachment'].sudo().browse(id_adjunto)
+        file_content_decoded = base64.b64decode(attachment.datas)
+
+        # Generar encabezado manualmente
+        filename = urllib.parse.quote(attachment.name or 'archivo.bin')
+        headers = [
+            ('Content-Type', attachment.mimetype),
+            ('Content-Disposition', f'attachment; filename="{filename}"')
+        ]
+        return request.make_response(file_content_decoded, headers=headers)
 
 
     @http.route(["/solicitud/mantenimiento/servicio"], type="http", methods=['POST'], auth="user", website=True)
@@ -494,7 +514,7 @@ class PortalPmant(http.Controller):
 
 
 
-
+    # EVALUACIONES DEL EQUIPO, HISTORIAL
     @http.route(["/my/equipo/<int:id_equipo>/evaluaciones", "/my/equipo/<int:id_equipo>/evaluaciones/page/<int:pagina>"], 
                 type="http", auth="user", website=True)
     def evaluaciones(self, id_equipo, pagina=1, **post):
@@ -518,6 +538,22 @@ class PortalPmant(http.Controller):
             'pagina_actual': pagina,
             'total_paginas': total_paginas,
         })
+
+    
+    # DECARGA DE LA HOJA DE EVALUACION
+    @http.route(['/descargas/reporte/evaluacion/<int:tarea_id>'], type='http', auth="user", website=True)
+    def descarga_reporte_evaluacion(self, tarea_id, **kw):
+        report_action = http.request.env['ir.actions.report'].sudo()
+        tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
+        for record in tarea :
+            content, _content_type = report_action._render_qweb_pdf('pmant.action_reporte_recepcion', res_ids=record.ids)
+
+        headers = [
+                ('Content-Type', 'application/pdf'),
+                ('Content-Length', len(content)),
+                ('Content-Disposition', 'attachment; filename=' + "Hoja de recepcion.pdf;")
+        ]
+        return request.make_response(content, headers=headers)
 
 
 
