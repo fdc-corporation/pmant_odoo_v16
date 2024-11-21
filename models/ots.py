@@ -1,15 +1,12 @@
+from datetime import date, datetime, timedelta, time
 from odoo import _, models, fields, api
 from odoo.exceptions import UserError
 import smtplib
-from datetime import date, datetime, timedelta
-from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import logging
 import base64
 from odoo.tools import html2plaintext
-import time
-import datetime
 
 # Crear un logger
 _logger = logging.getLogger(__name__)
@@ -73,9 +70,10 @@ class OTS(models.Model):
 
     def _fecha_estado(self):
         # Obtener la fecha actual
-        fecha_actual = datetime.now().strftime("%Y-%m-%d")
+        fecha_actual = datetime.now()
+        fecha_formato = fecha_actual.strftime("%Y-%m-%d")
         # Asignar la fecha actual al campo del modelo actual
-        self.fecha_ejec = fecha_actual
+        self.fecha_ejec = fecha_formato
 
         # Verificar que 'tarea' y 'planequipo' existan antes de asignarles valores
         if self.tarea and self.tarea.planequipo:
