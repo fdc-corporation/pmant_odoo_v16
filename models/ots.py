@@ -2,6 +2,7 @@ from odoo import _, models, fields, api
 from odoo.exceptions import UserError
 import smtplib
 from datetime import date, datetime, timedelta
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import logging
