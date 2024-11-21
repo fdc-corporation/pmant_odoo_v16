@@ -70,10 +70,17 @@ class OTS(models.Model):
             if record.stage_id.sequence == 5 :
                 self.send_reporte_final()
                 
+
     def _fecha_estado(self):
+        # Obtener la fecha actual
         fecha_actual = datetime.now().strftime("%Y-%m-%d")
+        # Asignar la fecha actual al campo del modelo actual
         self.fecha_ejec = fecha_actual
-        self.tarea.planequipo.fecha_ejec = fecha_actual
+
+        # Verificar que 'tarea' y 'planequipo' existan antes de asignarles valores
+        if self.tarea and self.tarea.planequipo:
+            self.tarea.planequipo.fecha_ejec = fecha_actual
+
 
             
     
