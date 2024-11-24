@@ -26,6 +26,15 @@ class PlanEquipo(models.Model):
     estado = fields.Char(string="Estado", related="tarea.state_id.name")
     fecha_hoy = fields.Char(string="Fecha Formateada")
 
+
+    @api.model
+    def create(self, vals):
+        # Usa valores predeterminados del contexto si no están definidos explícitamente
+        vals['cliente'] = vals.get('cliente', self.env.context.get('default_cliente'))
+        vals['ubicacion'] = vals.get('ubicacion', self.env.context.get('default_ubicacion'))
+        vals['tarea'] = vals.get('tarea', self.env.context.get('default_tarea'))
+        return super(PlanEquipo, self).create(vals)
+
     @api.depends('fecha_ejec')
     def _generate_tecnico(self):
         for record in self:
