@@ -107,10 +107,11 @@ class Tarea(models.Model):
                     # Actualizar solicitudes de mantenimiento relacionadas
                     ot = self.env['maintenance.request'].search([('tarea', '=', record.id)])
                     if ot:
-                        ot.stage_id = record.state_id.id
-                        if record.state_id.sequence == 3:
-                            fecha_actual = fields.Date.today()
-                            ot.fecha_ejec = fecha_actual
+                        if ot.stage_id.sequence != record.state_id.sequence:
+                            ot.stage_id = record.state_id.id
+                            if record.state_id.sequence == 3:
+                                fecha_actual = fields.Date.today()
+                                ot.fecha_ejec = fecha_actual
                 # Si el estado tiene una secuencia específica (por ejemplo, 3)
                 if record.state_id.sequence == 3:
                     record._fecha_ejecutada()

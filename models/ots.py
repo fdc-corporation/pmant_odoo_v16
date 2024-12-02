@@ -54,17 +54,20 @@ class OTS(models.Model):
         res = super(OTS, self).write(vals)
         if not self.event_id:
             self._create_calendar_event()
+        if 'stage_id' in vals:
+            print('------------------------------------------------------')
+            print('SE EJECUTO LA ACTUALIZACION ESTADO EN REVISION (3)')
+            self._change_createui() 
         return res
 
-    @api.onchange('stage_id')
     def _change_createui(self):
         for record in self:
             self._validacion_etapas()
             if record.tarea:
-                    record.tarea.write({'state_id': record.stage_id.id})
-            if record.stage_id.sequence == 3:
+                record.tarea.write({'state_id': record.stage_id.id})
+            if self.stage_id.sequence == 3:
                 self._fecha_estado()
-            if record.stage_id.sequence == 5 :
+            if self.stage_id.sequence == 5:
                 self.send_reporte_final()
                 
 
