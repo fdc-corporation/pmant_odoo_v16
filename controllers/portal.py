@@ -269,7 +269,7 @@ class PortalPmant(http.Controller):
         })
 
     
-    @http.route(['/descargas/reporte/mantenimiento/<int:tarea_id>'], type='http', auth="user", website=True)
+    @http.route('/descargas/reporte/mantenimiento/<int:tarea_id>', type='http', auth='user', methods=['GET'])
     def descarga_reporte_mantenimiento(self, tarea_id, **kw):
         report_action = http.request.env['ir.actions.report'].sudo()
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
@@ -286,7 +286,7 @@ class PortalPmant(http.Controller):
 
 
     # RUTA PARA LOS ADJUNTOS DEL EQUIPO
-    @http.route(['/descargas/adjuntos/equipo/<int:id_adjunto>'], type="http", auth="user", website=True)
+    @http.route(['/descargas/adjuntos/equipo/<int:id_adjunto>'], type="http", auth="user", methods=['GET'], website=True)
     def descarga_adjuntos_equipo(self, id_adjunto):
         adjunto = request.env['adjunto.mantenimiento'].sudo().browse(id_adjunto)
         if not adjunto or not adjunto.adjunto:
@@ -312,7 +312,7 @@ class PortalPmant(http.Controller):
         return request.render('pmant.certificados_equipo', {'equipo' : equipo})
 
     # RUTA PARA LOS ADJUNTOS DEL EQUIPO
-    @http.route(['/descargas/certificado/equipo/<int:id_adjunto>'], type="http", auth="user", website=True)
+    @http.route(['/descargas/certificado/equipo/<int:id_adjunto>'], type="http", methods=['GET'], auth="user", website=True)
     def descarga_certificado_equipo(self, id_adjunto):
         attachment = request.env['ir.attachment'].sudo().browse(id_adjunto)
         file_content_decoded = base64.b64decode(attachment.datas)
@@ -541,7 +541,7 @@ class PortalPmant(http.Controller):
 
     
     # DECARGA DE LA HOJA DE EVALUACION
-    @http.route(['/descargas/reporte/evaluacion/<int:tarea_id>'], type='http', auth="user", website=True)
+    @http.route(['/descargas/reporte/evaluacion/<int:tarea_id>'], type='http', auth="user", methods=['GET'], website=True)
     def descarga_reporte_evaluacion(self, tarea_id, **kw):
         report_action = http.request.env['ir.actions.report'].sudo()
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
