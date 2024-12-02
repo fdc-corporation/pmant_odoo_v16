@@ -5,7 +5,7 @@
         <field name="model">tarea.mantenimiento</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">pmant.reporte_recepcion</field>
-        <field name="print_report_name">'Hoja de recepcion - %s' % (object.cliente.name)</field>
+        <field name="print_report_name">'Hoja de recepcion - %s' % (object.tarea.cliente.name)</field>
     </record>
     
     <!-- Plantilla del reporte -->
@@ -42,13 +42,13 @@
                                     <strong>
                                                         Nombre:
                                                     </strong>
-                                    <span t-field="doc.cliente.name"/>
+                                    <span t-field="doc.tarea.cliente.name"/>
                                 </td>
                                 <td>
                                     <strong>
                                                         Identificacion:
                                                     </strong>
-                                    <span t-field="doc.cliente.l10n_latam_identification_type_id"/>-
+                                    <span t-field="doc.tarea.cliente.l10n_latam_identification_type_id"/>-
                                     
                                     
                                     
@@ -62,7 +62,7 @@
                                     
                                     
                                     
-                                    <span t-field="doc.cliente.vat"/>
+                                    <span t-field="doc.tarea.cliente.vat"/>
                                 </td>
                             </tr>
                             <tr>
@@ -82,13 +82,13 @@
                                     <strong>
                                                         Direccion:
                                                     </strong>
-                                    <span t-field="doc.cliente.street"/>
+                                    <span t-field="doc.tarea.cliente.street"/>
                                 </td>
                                 <td>
                                     <strong>
                                                         Correo Electronico:
                                                     </strong>
-                                    <span t-field="doc.cliente.email"/>
+                                    <span t-field="doc.tarea.cliente.email"/>
                                 </td>
                             </tr>
                         </table>

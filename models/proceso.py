@@ -18,8 +18,8 @@ class PlanEquipoProcesos(models.Model):
     descripcion2        = fields.Text(compute="_geadj",default="falta poner Comentario...",string="Comentarios")
     name_file           = fields.Char(default="Adjunto")
     adjuntos            = fields.One2many('adjuntoimage.mantenimiento', 'planequipoproceso', string="Archivos Adjuntos")
-    adjunto1 = fields.Binary(String="Adjunto 1")
-    adjunto23 = fields.Binary(String="Adjunto 2")
+    adjunto1            = fields.Binary(string="Adjunto 1")
+    adjunto23           = fields.Binary(string="Adjunto 2")
     
     def _geadj(self):
         for rec in self:
