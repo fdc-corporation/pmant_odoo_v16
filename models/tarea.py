@@ -10,9 +10,9 @@ class AdjuntoEvaluacion (models.Model):
     _name = 'adjunto.evaluacion'
     _description = 'Adjuntos de evaluación'
 
-    tarea  = fields.Many2one('tarea.mantenimiento', string="Tarea", invisible=True)
+    tarea  = fields.Many2one('tarea.mantenimiento', string="Tarea")
     adjuntoimage     = fields.Binary()
-
+    comentario       = fields.Text()
 
 
 class TipoTarea(models.Model):
@@ -51,7 +51,8 @@ class Tarea(models.Model):
     adjuntos_evaluaciones     = fields.One2many("adjunto.evaluacion", 'tarea', string='Adjuntos de Evaluacion')
     id_tipo = fields.Integer()
     fecha_hoy = fields.Char(string="Fecha Formateada", compute="_fecha_formateada")
-
+    is_evaluacion = fields.Boolean(string="Es Hoja de Recepcion")
+    
     @api.onchange('tipo')
     def tipo_click(self):
         for record in self:

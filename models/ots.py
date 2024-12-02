@@ -29,7 +29,8 @@ class OTS(models.Model):
     fecha_ejec = fields.Date(string="Fecha Ejecutada", readonly=False)
     subodinados = fields.Many2many('res.users', string="Subordinados")
     event_id = fields.Many2one('calendar.event', string='Evento en calendario')
-
+    is_evaluacion = fields.Boolean(string="Es una Evaluacion") 
+    # evaluacion = fields.Many2one('ot.evaluaciones', string="Tarea / Evaluacion")
 
     @api.depends('estado')
     def _get_tex(self):

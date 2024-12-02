@@ -24,15 +24,15 @@
 							<p style="text-align: right;border:0px;" t-esc="doc.fecha_hoy"/>
 							<p>
 								<span>Señores:</span>
-								<strong t-esc="doc.cliente.name"/>
+								<strong t-esc="doc.tarea.cliente.name"/>
 							</p>
 							<p>
 								<span>RUC: </span>
-								<span t-esc="doc.cliente.vat"/>
+								<span t-esc="doc.tarea.cliente.vat"/>
 							</p>
 							<p>
 								<span>Direccion: </span>
-								<span t-esc="doc.cliente.street"/>
+								<span t-esc="doc.tarea.cliente.street"/>
 							</p>
 							<br/>
 							<h1 class="text-center" style="font-weight: bold; font-size: 30px;">CERTIFICADO DE OPERATIVIDAD Y GARANTÍA</h1>
@@ -44,7 +44,7 @@
 										se encuentra ubicado en 
 										
 										
-								<span t-esc="doc.ubicacion.street"/>
+								<span t-esc="doc.tarea.ubicacion.street"/>
 							</p>
 							<br/>
 							<p>

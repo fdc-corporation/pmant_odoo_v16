@@ -5,7 +5,7 @@
         <field name="model">tarea.mantenimiento</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">pmant.reporte_recepcion</field>
-        <field name="print_report_name">'Hoja de recepcion - %s' % (object.tarea.cliente.name)</field>
+        <field name="print_report_name">'Hoja de recepcion - %s' % (object.cliente.name)</field>
     </record>
     
     <!-- Plantilla del reporte -->
@@ -42,53 +42,41 @@
                                     <strong>
                                                         Nombre:
                                                     </strong>
-                                    <span t-field="doc.tarea.cliente.name"/>
+                                    <span t-field="doc.cliente.name"/>
                                 </td>
                                 <td>
                                     <strong>
-                                                        Identificacion:
-                                                    </strong>
-                                    <span t-field="doc.tarea.cliente.l10n_latam_identification_type_id"/>-
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    <span t-field="doc.tarea.cliente.vat"/>
+                                        Identificacion:
+                                    </strong>
+                                    <span t-field="doc.cliente.l10n_latam_identification_type_id"/>-
+
+                                    <span t-field="doc.cliente.vat"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>
-                                                        Direccion:
-                                                    </strong>
+                                        Direccion:
+                                    </strong>
                                     <span t-field="doc.compania.street"/>
                                 </td>
                                 <td>
                                     <strong>
-                                                        Correo Electronico:
-                                                    </strong>
+                                        Correo Electronico:
+                                    </strong>
                                     <span t-field="doc.compania.email"/>
                                 </td>
                                 <td>
                                     <strong>
-                                                        Direccion:
-                                                    </strong>
-                                    <span t-field="doc.tarea.cliente.street"/>
+                                        Direccion:
+                                    </strong>
+                                    <span t-field="doc.cliente.street"/>
                                 </td>
                                 <td>
                                     <strong>
-                                                        Correo Electronico:
-                                                    </strong>
-                                    <span t-field="doc.tarea.cliente.email"/>
+                                        Correo Electronico:
+                                    </strong>
+                                    <span t-field="doc.cliente.email"/>
                                 </td>
                             </tr>
                         </table>
@@ -104,8 +92,8 @@
                             <tr>
                                 <td style="whidth:50%;">
                                     <strong>
-                                                        Receptor:
-                                                    </strong>
+                                        Receptor:
+                                    </strong>
                                     <span t-field="doc.create_user.name"/>
                                 </td>
                                 
@@ -121,147 +109,44 @@
                                         <tr>
                                             <td colspan="3" style="text-align: center; font-size: 13px; border: 0px;color:white;background-color:  #22629D;">
                                                 <strong>
-                                                                    Datos del Equipo
-                                                                </strong>
+                                                    Datos del Equipo
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <strong>
-                                                                    Detalles de la máquina
-                                                                </strong>
+                                                    Detalles de la máquina
+                                                </strong>
                                                 <br/>
-                                                                Máquina:
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                Máquina:
                                                 <span t-field="pe.equipo"/>
-                                                                -
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                            -
                                                 <span t-field="pe.equipo.marca"/>
                                                 <br/>
-                                                                Propietario:
-                                                 
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                Propietario:
                                                 <span t-field="pe.equipo.propietario.name"/>
                                                 <br/>
-                            Fecha de ingreso:
+                                                Fecha de ingreso:
                                                  
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 <span t-field="doc.fecha_entrada"/>
                                                 <br/>
                                             </td>
                                             <td>
                                                                 Marca de la máquina:
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                             
                                                 <span t-field="pe.equipo.marca"/>
                                                 <br/>
                                                                 MFG Year:
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                 
                                                 <span t-field="pe.equipo.effective_date"/>
                                                 <br/>
                                                                 N° de Serie:
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                 
                                                 <span t-field="pe.equipo.serial_no"/>
                                                 <br/>
                                                                 Fecha de compra:
-                                                                
-                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                 
                                                 <span t-field="pe.equipo.effective_date"/>
                                             </td>
                                             <td rowspan="2">
@@ -289,10 +174,11 @@
                         </table>
                         <div class="row">
                             <t t-foreach="doc.adjuntos_evaluaciones" t-as="imagen">
-                               <div class="col-6">
+                               <div class="col-6" style="margin-bottom:15px;">
                                    <center>
-                                                <img t-attf-src="data:image/jpg;base64,{{ imagen.adjuntoimage }}" style="width:230px;height:230px;display:block;margin-bottom:10px;"/>
-                                            </center>
+                                        <img t-attf-src="data:image/jpg;base64,{{ imagen.adjuntoimage }}" style="width:220px;height:220px;display:block;margin-bottom:10px;"/>
+                                        <span style="font-size:13px;" t-esc="imagen.comentario"/>
+                                    </center>
                                </div>             
                             </t>
                         </div>

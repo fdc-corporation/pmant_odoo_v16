@@ -275,11 +275,11 @@ class PortalPmant(http.Controller):
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
         for record in tarea :
             content, _content_type = report_action._render_qweb_pdf('pmant.action_ot_mantenimiento', res_ids=record.ids)
-
+        filename = f"OT-{tarea.name}.pdf"
         headers = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(content)),
-                ('Content-Disposition', 'attachment; filename=' + "OT-" + tarea.name + ".pdf;")
+                ('Content-Disposition', f'attachment; filename={filename}')
         ]
         return request.make_response(content, headers=headers)
 
@@ -522,7 +522,7 @@ class PortalPmant(http.Controller):
         offset = (pagina - 1) * per_page  # Calcular el inicio de la página actual
 
         # Obtener todas las tareas relacionadas con el equipo y con tipo "Evaluación"
-        domain = ["&", ("planequipo.equipo", "=", id_equipo), ("tipo.name", "=", "Evaluacion")]
+        domain = ["&", ("planequipo.equipo", "=", id_equipo), ("is_evaluacion", "=", "True")]
         total_tareas = request.env['tarea.mantenimiento'].sudo().search_count(domain)  # Total de tareas
         tareas = request.env['tarea.mantenimiento'].sudo().search(domain, limit=per_page, offset=offset)  # Tareas por página
 

@@ -152,6 +152,7 @@
                             </group>
                             <group>
                                 <field name="tipo"/>
+                                <field name="is_evaluacion"/>
                                 <field name="ubicacion" domain="[('parent_id','=',cliente)]"/>
                             </group>
                             <field name="planequipo" readonly="not id" context="{'default_cliente': cliente, 'default_ubicacion': ubicacion , 'default_tarea': id}">
@@ -184,11 +185,16 @@
                             <page string="OTs ">
                                 <field name="ots" groups="pmant.group_pmant_admin"/>
                             </page>
-                            <page string="Hoja de Recepcion" invisible="id_tipo == 0">
+                            <page string="Hoja de Recepcion" invisible="not is_evaluacion">
                                 <group>
                                     <field name="create_user"/>
                                     <field name="fecha_entrada"/>
-                                    <field name="adjuntos_evaluaciones"/>
+                                    <field name="adjuntos_evaluaciones">
+                                        <tree editable="bottom">
+                                            <field name="adjuntoimage" string="Imagen de evaluacion" />
+                                            <field name="comentario" string="Comentario de la imagen" />
+                                        </tree>
+                                    </field>
                                     <field name="comentario_tecnico" placeholder="Comentario de recepcion" />
                                 </group>
                             </page>
