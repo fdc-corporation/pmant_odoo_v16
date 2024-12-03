@@ -332,16 +332,10 @@
 													</td>
 													<td>
 														<center>
-															<t t-if="pr.estado.name == 'OK'">
-																<img src="https://fdc-corporation.com/public/assets/img/erp/1.png" style="width:16px;"/>
-															</t>
-															<t t-if="pr.estado.name == 'NO'">
-																<img src="https://fdc-corporation.com/public/assets/img/erp/2.png" style="width:16px;"/>
-															</t>
-															<t t-if="pr.estado.name == 'N/A'">
-																<img src="https://fdc-corporation.com/public/assets/img/erp/3.png" style="width:16px;"/>
-															</t>
-														</center>
+                                                            <t t-if="pr.estado">
+                                                                <img t-attf-src="data:image/jpg;base64,{{ pr.estado.icono }}" alt="" class="" style="width:16px;"/>
+                                                            </t>
+                                                        </center>
 														<!-- <span t-field="pr.estado"/> -->
 													</td>
 													<td>

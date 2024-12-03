@@ -47,5 +47,5 @@ class Proceso(models.Model):
 class EstadoProceso(models.Model):
    _name   = 'estadoproceso.mantenimiento'
    name    = fields.Char(size=5,required=True,string='Nombre')
-   icono = fields.Binary(string="Icono")
+   icono = fields.Binary(string="Icono", store=True)
 #'''
