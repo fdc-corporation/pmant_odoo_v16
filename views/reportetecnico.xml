@@ -37,7 +37,10 @@
 									<strong>
 												N° de Orden:
 											</strong>
-									<span t-field="doc.name"/>
+									<t t-if="doc.name">
+										<span t-field="doc.name"/>
+									</t>
+									
 								</td>
 								<td class="col-6">
 									<strong>
@@ -274,10 +277,10 @@
 															<strong>
 															Receptor:
 															</strong>
-															<span t-esc="doc.create_user.name"/>
+															<span t-field="doc.create_user.name"/>
 														</td>
 														<td style="whidth:50%;">
-															<span t-esc="doc.comentario_tecnico"/>
+															<span t-field="doc.comentario_tecnico"/>
 														</td>
 													</tr>
 												</tbody>
@@ -294,7 +297,7 @@
 											<div class="row">
 												<t t-foreach="doc.adjuntos_evaluaciones" t-as="imagen">
 													<div class="col-6" style="margin-bottom:15px;">
-														<span style="font-size:12px;" t-esc="imagen.comentario"/>
+														<span style="font-size:12px;" t-field="imagen.comentario"/>
 													</div>
 												</t>
 											</div>
@@ -375,7 +378,7 @@
 													</td>
 													<td>
 														<strong>
-																	Descripcion:
+																	Descripción:
 																</strong>
 														<span t-field="pr.descripcion"/>
 													</td>
@@ -427,17 +430,17 @@
 									<strong style="font-size:12px;">
 												Firmado por:
 											</strong>
-									<t t-esc="doc.namefirma"/>
+									<span t-field="doc.namefirma"/>
 								</p>
 								<p style="margin:0px; 0px -5px 0px;font-size:12px;">
 									<strong style="font-size:12px;">
 												DNI:
 											</strong>
-									<t t-esc="doc.dni"/>
+									<span t-field="doc.dni"/>
 								</p>
 								<p style="margin:0px; 0px -5px 0px;font-size:12px;">
 									<strong>Comentario:</strong>
-									<t t-esc="doc.comentario"/>
+									<span t-field="doc.comentario"/>
 								</p>
 							</div>
 						</div>

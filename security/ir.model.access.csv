@@ -60,7 +60,6 @@ pmant_admin_acc11,ADMIN_GRUPO_PROCESO,model_grupoproceso_mantenimiento,pmant.gro
 pmant_admin_acc12,ADMIN_PRIORIDAD,model_prioridad_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc13,ADMIN_PLANTILLA,model_plantilla_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc14,ADMIN_PLANTILLA_TICKET,model_plantillaticket_mantenimiento,pmant.group_pmant_admin,1,1,1,1
-pmant_admin_acc15,ADMIN_CERTIFICADO,model_certificado_wizard,pmant.group_pmant_admin,1,1,1,1
 
 
 access_wizard_equipment_selection,wizard.equipment.selection,model_wizard_equipment_selection,,1,1,1,1

@@ -19,7 +19,7 @@
     'version': '1.9',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale', 'web', 'product' ,'crm', 'portal' ,'mail','maintenance','hr','contacts','hr_maintenance','web_digital_sign','calendar'],
+    'depends': ['base','sale', 'web', 'documents' , 'product' ,'crm', 'portal' ,'mail','maintenance','hr','contacts','hr_maintenance','web_digital_sign','calendar'],
 
     # always loaded
     'data': [
@@ -49,8 +49,6 @@
         'views/paramatros.xml',
         'data/ir_module_category_data.xml',
         'views/reporteweb.xml',
-        # 'views/reportes/reporte_ot_correctivo.xml',
-        # 'views/etapas/maintenance_stage_data.xml',
         # VISTAS DEL PORTAL MANTENIMIENTO
         'views/web/index_portal.xml',
         'views/web/sedes_portal.xml',
@@ -83,12 +81,12 @@
         # VISTAS DE MODELO DE EVENTO
         'views/eventos/eventos-mant.xml',
         'views/adjunto/it_attchment_inherit.xml',
+        # Vista en el modelo de DOCUMENTS
+        'views/documents/documentos_inherit.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             'pmant/static/src/css/sedes_portal.css',
-            # 'pmant/static/src/css/equipos_sede.css',
-            # 'pmant/static/src/css/detalles_equipo.css',
         ],
     },
     'installable': True,

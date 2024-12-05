@@ -41,8 +41,8 @@ class Equipo(models.Model):
     prioridad    = fields.Many2one('prioridad.mantenimiento',string="Prioridad")
     adjunto      = fields.One2many('adjunto.mantenimiento','equipo',string="Archivos Adjuntos")
     planequipo   = fields.One2many('planequipo.mantenimiento','equipo',string="Planes Equipos")
-    qr_image     = fields.Binary("QR Code", compute='_generate_qr_code')
-    qr_image2    = fields.Binary("QR Code", compute='_generate_qr_code')
+    qr_image     = fields.Binary("QR equipo", compute='_generate_qr_code', attachment=True, store=True)
+    qr_image2    = fields.Binary("QR equipo", compute='_generate_qr_code', attachment=True)
     url_qr       = fields.Char(string='URL del QR',compute='_generate_qr_code')
     fecha_prox   = fields.Date(string="Fecha aprox")
     hoy          = fields.Date(default=str(datetime.now()))
@@ -54,9 +54,8 @@ class Equipo(models.Model):
     avisado      = fields.Boolean(string="Avisado")
     anticipo     = fields.Integer(compute='_generate_f_prox')
     image        = fields.Binary("Image", attachment=True)
-    # ot_correctivos = fields.Many2many('ot.correctivo')
-    certificados = fields.Many2many('ir.attachment', string="Certificados de operatividad" , compute="_get_certificados")
-
+    certificados = fields.Many2many('ir.attachment', 'id_equipo', string="Certificados de operatividad" )
+    documentos   = fields.Many2many('documents.document', 'equipo', string="Documentos")
 
 
     @api.model
@@ -166,4 +165,9 @@ class EquiposUbicacion(models.Model):
                     'equipos_ubicacion' : equipo.id
                 })
 
+
+class DocuemntosEquipo (models.Model):
+    _inherit = "documents.document"
+
+    equipo = fields.Many2many('maintenance.equipment', string='Equipo')
 

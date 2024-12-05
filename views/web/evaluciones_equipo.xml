@@ -63,14 +63,14 @@
 							<div class="propiedades-contenedor">
 								<div class="propiedad">
 									<label>
-										Propitario :
+										Propietario :
 									</label>
 									<span t-esc="equipo.propietario.name">
 									</span>
 								</div>
 								<div class="propiedad">
 									<label>
-										Ubicacion :
+										Ubicación :
 									</label>
 									<span t-esc="equipo.ubicacion.name">
 									</span>
@@ -79,14 +79,14 @@
 							<div class="propiedades-contenedor">
 								<div class="propiedad">
 									<label>
-										Categoria :
+										Categoría :
 									</label>
 									<span t-esc="equipo.category_id.name">
 									</span>
 								</div>
 								<div class="propiedad">
 									<label>
-										Fecha Asignada :
+										Fecha asignada :
 									</label>
 									<span t-esc="equipo.assign_date">
 									</span>
@@ -97,7 +97,7 @@
 				</div>
 				<div class="main-card-sedes">
                     <div>
-                        <h3>Historial de Evaluaciones</h3>
+                        <h3>Historial de evaluaciones</h3>
                     </div>
 					<div class="main-sedes">
 						<t t-if="len(tareas) > 0">
@@ -130,7 +130,7 @@
 												<div>
 													<p>
 														<strong>
-															Comentario de recepcion:
+															Comentario de recepción:
 														</strong>
 													</p>
 													<p t-esc="plan.comentario_tecnico">
@@ -140,7 +140,7 @@
 												</hr>
 												<p>
 													<strong>
-														Fotos de recepcion
+														Fotos de recepción
 													</strong>
 												</p>
 												<div stye="display:flex; gap:5px;">
@@ -160,7 +160,7 @@
 												</hr>
 												<p style="margin-top:8px;">
 													<strong>
-														Fecha de recepcion:
+														Fecha de recepción:
 													</strong>
 													<t t-esc="plan.fecha_entrada" />
 												</p>
@@ -171,11 +171,7 @@
 							</t>
 						</t>
 						<t t-else="">
-							Aun no cuenta con servicios registrados en este equipo, solicta
-							<a t-att-href="'/my/equipos/%d/detalles' % equipo.id">
-								Aqui
-							</a>
-							un nuevo servicio.
+							Aún no cuenta con evaluaciones registrados en el equipo. Contáctate con FDC CORP para registrar uno nuevo. 
 						</t>
 					</div>
                     <div class="contenedor-paginacion">

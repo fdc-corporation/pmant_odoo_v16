@@ -284,6 +284,18 @@
     display: block;
   }
 }
+.main .main-card-sedes .detalle-equipo-header .name-equipo .btn-whatssap,
+.main .main-card-equipos .detalle-equipo-header .name-equipo .btn-whatssap,
+.main .main-card-detalles-equipo .detalle-equipo-header .name-equipo .btn-whatssap {
+  display: none;
+}
+@media screen and (min-width: 744px) {
+  .main .main-card-sedes .detalle-equipo-header .name-equipo .btn-whatssap,
+  .main .main-card-equipos .detalle-equipo-header .name-equipo .btn-whatssap,
+  .main .main-card-detalles-equipo .detalle-equipo-header .name-equipo .btn-whatssap {
+    display: block;
+  }
+}
 .main .main-card-sedes .detalle-equipo-header .img-header-equipo,
 .main .main-card-equipos .detalle-equipo-header .img-header-equipo,
 .main .main-card-detalles-equipo .detalle-equipo-header .img-header-equipo {
@@ -320,6 +332,18 @@
   .main .main-card-sedes .detalle-equipo-header .btn-mobile,
   .main .main-card-equipos .detalle-equipo-header .btn-mobile,
   .main .main-card-detalles-equipo .detalle-equipo-header .btn-mobile {
+    display: none;
+  }
+}
+.main .main-card-sedes .detalle-equipo-header .btn-whatssap,
+.main .main-card-equipos .detalle-equipo-header .btn-whatssap,
+.main .main-card-detalles-equipo .detalle-equipo-header .btn-whatssap {
+  display: block;
+}
+@media screen and (min-width: 744px) {
+  .main .main-card-sedes .detalle-equipo-header .btn-whatssap,
+  .main .main-card-equipos .detalle-equipo-header .btn-whatssap,
+  .main .main-card-detalles-equipo .detalle-equipo-header .btn-whatssap {
     display: none;
   }
 }
@@ -361,7 +385,7 @@
 .main .main-card-equipos .titulo-seccion,
 .main .main-card-detalles-equipo .titulo-seccion {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   gap: 10px;
 }
 .main .main-card-sedes .titulo-seccion button,
@@ -695,6 +719,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+.modal-body input[disabled=disabled] {
+  background-color: lavender !important;
 }
 
 .modal-footer button {
