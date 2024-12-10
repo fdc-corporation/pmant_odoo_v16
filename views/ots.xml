@@ -36,7 +36,7 @@
 				<field name="empresa" readonly="1" />
 				<field name="ubicacion" readonly="1" />
 				<field name="oportunidad" readonly="1"/>
-				<field name="order_compra" invisible="stage_id in (1, 2)" />
+				<field name="order_compra" />
 				<field name="selec_sunat" invisible="stage_id in (1, 2, 3)" />
 				<field name="factura_sunat" invisible="not selec_sunat" />
                 <field name="factura" invisible="stage_id in (1, 2, 3) and selec_sunat" />

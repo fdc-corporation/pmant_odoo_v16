@@ -19,7 +19,23 @@
     'version': '1.9',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale', 'web', 'documents' , 'product' ,'crm', 'portal' ,'mail','maintenance','hr','contacts','hr_maintenance','web_digital_sign','calendar'],
+    'depends': [
+        'base',
+        'sale',
+        'web',
+        'documents' ,
+        'oc_compras' ,
+        'product' ,
+        'crm',
+        'portal' ,
+        'mail',
+        'maintenance',
+        'hr',
+        'contacts',
+        'hr_maintenance',
+        'web_digital_sign',
+        'calendar'
+    ],
 
     # always loaded
     'data': [

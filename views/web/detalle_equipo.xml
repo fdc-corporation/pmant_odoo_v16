@@ -217,8 +217,8 @@
 									<button href="" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#Model_Solicitud">
 										Solicitar servicio
 									</button>
-									<a class="btn-whatssap" t-att-href="whatsapp_url" style="text-decoration:none;">
-										<img src="https://clicandwords.com/wp-content/uploads/2018/02/whatsapp-business.png" width="30px" />
+									<a class="btn-whatssap btn btn-primary" t-att-href="whatsapp_url" style="text-decoration:none;border: 0px;background: #3fc93f;width: 60%;" >
+										Whatsapp
 									</a>
 								</div>
 							</div>
@@ -230,8 +230,8 @@
 								<button href="" type="button" class="btn btn-primary btn-mobile" data-bs-toggle="modal" data-bs-target="#Model_Solicitud">
 									Solicitar servicio
 								</button>
-								<a class="btn-whatssap" t-att-href="whatsapp_url" style="text-decoration:none;">
-									<img src="https://clicandwords.com/wp-content/uploads/2018/02/whatsapp-business.png" width="30px" />
+								<a class="btn-whatssap btn btn-primary" style="text-decoration:none;border: 0px;background: #3fc93f;width: 60%;" >
+										Whatsapp
 								</a>
 							</div>
 						</div>

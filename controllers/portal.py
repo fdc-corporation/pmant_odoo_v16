@@ -27,7 +27,7 @@ class PortalPmant(http.Controller):
 
         if user_partner.is_company:
             # Crear dominio base para filtrar las sedes
-            dominio = [('parent_id', '=', user_partner.id)]
+            dominio = [('parent_id', '=', user_partner.id), ("type", "=", "delivery")]
             
             # Si hay un término de búsqueda, agregarlo al dominio
             if search:
@@ -102,9 +102,7 @@ class PortalPmant(http.Controller):
 
         # Definir el dominio base para la búsqueda
         domain = [
-            ('propietario', '=', empresa_id),
-            ('ubicacion', '=', False)
-        ]
+            ('propietario', '=', empresa_id)        ]
 
         # Si hay un término de búsqueda, agregarlo al dominio
         if search:
@@ -235,12 +233,14 @@ class PortalPmant(http.Controller):
 
 
     # DETALLES DE HISTORIALD E MNATENIMIENTO - EQUIPO
-    @http.route(['/my/equipo/<int:equipo_id>/historial', '/my/equipo/<int:equipo_id>/historial/page/<int:pagina>'], type="http", auth="user", website=True)
-    def historial_mantenimiento(self, equipo_id, pagina=1):
+    @http.route(['/my/equipo/<int:equipo_id>/historial', '/my/equipo/<int:equipo_id>/historial/page/<int:pagina>'], type="http", methods=['GET'], auth="user", website=True)
+    def historial_mantenimiento(self, equipo_id, pagina=1, **kwargs):
         equipo = request.env['maintenance.equipment'].sudo().browse(equipo_id)
         per_page = 10  # Registros por página
-
         # Filtrar historial de mantenimiento relacionado con el equipo
+        filtro = kwargs.get('filtro', False)
+        if filtro == False : 
+            filtro = "fecha_ejec"
         domain = [("equipo", "=", equipo_id)]
         total = request.env['planequipo.mantenimiento'].sudo().search_count(domain)
         total_paginas = math.ceil(total / per_page)
@@ -253,7 +253,9 @@ class PortalPmant(http.Controller):
 
         # Obtener registros de la página actual
         offset = (pagina - 1) * per_page
-        historial = request.env['planequipo.mantenimiento'].sudo().search(domain, offset=offset, limit=per_page)
+        filtro = f"{filtro} desc" 
+
+        historial = request.env['planequipo.mantenimiento'].sudo().search(domain, offset=offset, limit=per_page, order=filtro)
 
         return request.render('pmant.historial_mantenimiento', {
             'equipo': equipo,
@@ -297,13 +299,13 @@ class PortalPmant(http.Controller):
         })
 
     
-    @http.route('/descargas/reporte/mantenimiento/<int:tarea_id>', type='http', auth='user', methods=['GET'])
-    def descarga_reporte_mantenimiento(self, tarea_id, **kw):
+    @http.route('/descargas/reporte/mantenimiento/<int:tarea_id>/<string:name>', type='http', auth='user', website=True,  methods=['GET'])
+    def descarga_reporte_mantenimiento(self, tarea_id, name, **kw):
         report_action = http.request.env['ir.actions.report'].sudo()
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
         for record in tarea :
             content, _content_type = report_action._render_qweb_pdf('pmant.action_ot_mantenimiento', res_ids=record.ids)
-        filename = f"OT-{tarea.name}.pdf"
+        filename = f"Reporte Tecnico - {name}.pdf"
         headers = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(content)),

@@ -105,7 +105,7 @@
         <record model="ir.actions.act_window" id="tarea_list_action">
             <field name="name">Tareas</field>
             <field name="res_model">tarea.mantenimiento</field>
-            <!-- <field name="view_type">form</field> -->
+            <field name="context">{'search_default_filter_ot_null': 1}</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">Crea tu primera Tarea
@@ -123,17 +123,29 @@
                 </p>
             </field>
         </record>
+        <record id="view_tarea_search" model="ir.ui.view">
+            <field name="name">model.search</field>
+            <field name="model">tarea.mantenimiento</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <!-- Filtro llamado inactivos -->
+                    <filter string="Sin Ot" name="filter_ot_null" domain="[('ots','=', False)]"/>
+                </search>
+            </field>
+        </record>
 
         <record model="ir.ui.view" id="Tareav_tree_view">
-            <field name="name">Tareav.form</field>
+            <field name="name">Tareav.tree</field>
             <field name="model">tarea.mantenimiento</field>
             <field name="arch" type="xml">
                 <tree string="Tarea Tree">
-			        <field name="name"/>
-			        <field name="state_id"/>   
+                    <field name="name"/>
+                    <field name="state_id"/>   
                 </tree>
             </field>
-         </record>
+        </record>
+
 
         <record model="ir.ui.view" id="Tareav_form_view">
             <field name="name">Tareav.form</field>
@@ -149,6 +161,7 @@
                                 <field name="id" invisible="1"/>
                                 <field name="name"/>
                                 <field name="cliente"/>
+                                <field name="oc_id" />
                             </group>
                             <group>
                                 <field name="tipo"/>

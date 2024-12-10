@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
                     'name': order.name + ' - Servicios de mantenimiento',
                     'cliente': order.partner_id.id,
                     'ubicacion': order.partner_shipping_id.id,
+                    'oc_id': order.oc_id.id,
                 }
                 mantenimiento = self.env["tarea.mantenimiento"].create(valores)
 

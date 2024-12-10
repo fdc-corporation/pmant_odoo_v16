@@ -52,7 +52,9 @@ class Tarea(models.Model):
     id_tipo = fields.Integer()
     fecha_hoy = fields.Char(string="Fecha Formateada", compute="_fecha_formateada")
     is_evaluacion = fields.Boolean(string="Es Hoja de Recepcion")
-    
+    oc_id = fields.Many2one('oc.compras', string="OC")
+
+
     @api.onchange('tipo')
     def tipo_click(self):
         for record in self:

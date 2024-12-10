@@ -20,7 +20,7 @@ class OTS(models.Model):
     tex = fields.Char(string='Text')
     empresa = fields.Many2one('res.partner', related="tarea.cliente")
     ubicacion = fields.Many2one('res.partner', related="tarea.ubicacion")
-    order_compra = fields.Char( string="Orden de compra")
+    order_compra = fields.Many2one('oc.compras', string="Orden de compra")
     factura = fields.Many2one('account.move', string="Factura")
     factura_sunat = fields.Char( string="Factura Sunat")
     selec_sunat = fields.Boolean(string="Factura Sunat?")
@@ -30,12 +30,19 @@ class OTS(models.Model):
     subodinados = fields.Many2many('res.users', string="Subordinados")
     event_id = fields.Many2one('calendar.event', string='Evento en calendario')
     is_evaluacion = fields.Boolean(string="Es una Evaluacion") 
-    # evaluacion = fields.Many2one('ot.evaluaciones', string="Tarea / Evaluacion")
 
     @api.depends('estado')
     def _get_tex(self):
         if self.estado:
             self.tex = "Urgente"
+
+    @api.depends('tarea')
+    def _compute_order_compra(self):
+        for record in self:
+            if record.tarea and record.tarea.oc_id:
+                record.order_compra = record.tarea.oc_id.id
+            else:
+                record.order_compra = False
 
 
     @api.model
@@ -59,6 +66,10 @@ class OTS(models.Model):
             print('------------------------------------------------------')
             print('SE EJECUTO LA ACTUALIZACION ESTADO EN REVISION (3)')
             self._change_createui() 
+        if 'tarea' in vals:    
+            print('------------------------------------------------------')
+            print('SE EJECUTO LA FUNCION PARA LA TAREA')
+            self._compute_order_compra() 
         return res
 
     def _change_createui(self):
@@ -89,7 +100,7 @@ class OTS(models.Model):
     def _validacion_etapas (self):
         for record in self:
             if record.stage_id.sequence == 4 and not record.order_compra:
-                    raise UserError(_("Debe ingresar la orden de compra"))
+                    raise UserError(_("Debe registrar la OC en el mudlo de Orden de compras"))
                 
             elif record.stage_id.sequence == 5:
                 if not record.selec_sunat and not record.factura:
