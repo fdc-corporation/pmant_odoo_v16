@@ -305,7 +305,7 @@ class PortalPmant(http.Controller):
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
         for record in tarea :
             content, _content_type = report_action._render_qweb_pdf('pmant.action_ot_mantenimiento', res_ids=record.ids)
-        filename = f"Reporte Tecnico - {name}.pdf"
+        filename = f"Reporte Tecnico.pdf"
         headers = [
                 ('Content-Type', 'application/pdf'),
                 ('Content-Length', len(content)),
