@@ -20,7 +20,7 @@ class OTS(models.Model):
     tex = fields.Char(string='Text')
     empresa = fields.Many2one('res.partner', related="tarea.cliente")
     ubicacion = fields.Many2one('res.partner', related="tarea.ubicacion")
-    order_compra = fields.Many2one('oc.compras', string="Orden de compra")
+    order_compra = fields.Many2one('oc.compras', string="Orden de compra", ondelete='set null')
     factura = fields.Many2one('account.move', string="Factura")
     factura_sunat = fields.Char( string="Factura Sunat")
     selec_sunat = fields.Boolean(string="Factura Sunat?")
