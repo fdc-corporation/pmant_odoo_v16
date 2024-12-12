@@ -93,6 +93,7 @@
         # PLANTILLAS DE CORREOS PMANT - PETICIONES DE MANTENIMIENTO
         'views/email/email_empresa_ot.xml',
         'views/email/email_sucursal_ot.xml',
+        'views/email/email_hoja_recepcion.xml',
         'views/contacto/equipo_contacto.xml',
         # VISTAS DE MODELO DE EVENTO
         'views/eventos/eventos-mant.xml',

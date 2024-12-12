@@ -7,6 +7,8 @@
     <field name="email_from">{{ (user.email_formatted or object.user_id.email_formatted) }}</field>
     <field name="email_to">{{ object.ubicacion.email }}</field>
     <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="report_template_ids" eval="[(4, ref('pmant.action_mantenimiento_ot'))]" />
+
     <field name="body_html">
         <![CDATA[
         <div>

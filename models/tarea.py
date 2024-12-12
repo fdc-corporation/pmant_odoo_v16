@@ -2,6 +2,8 @@ from odoo import models, fields, api, exceptions
 from datetime import date, datetime, timedelta
 from odoo.exceptions import UserError
 import logging
+from odoo.exceptions import UserError
+import base64
 
 _logger = logging.getLogger(__name__)
 
@@ -189,6 +191,58 @@ class Tarea(models.Model):
                 for _, alertas in equipos_alertas:
                     if alertas:
                         event.alarm_ids = [(4, alarma.id) for alarma in alertas]
+
+    def action_send_email_recepcion(self):
+        template = self.env.ref('pmant.email_template_hoja_recepcion')
+        statement_report_action = self.env.ref('pmant.action_reporte_recepcion')
+        ir_actions_report_sudo = self.env['ir.actions.report'].sudo()
+
+        if not template or not statement_report_action:
+            raise UserError("No se encuentra la plantilla o el reporte configurado.")
+
+        for record in self:
+            # Generar el reporte PDF
+            content, _content_type = ir_actions_report_sudo._render_qweb_pdf(
+                statement_report_action, [record.id]
+            )
+
+            # Crear el archivo adjunto
+            # attachment = self.env['ir.attachment'].create({
+            #     'name': f'Hoja_Recepcion_{record.name}.pdf',  # Nombre del archivo
+            #     'type': 'binary',
+            #     'datas': base64.b64encode(content).decode('utf-8'),  # Codificar el PDF a base64
+            #     'res_model': record._name,  # Modelo relacionado
+            #     'res_id': record.id,  # ID del registro relacionado
+            #     'mimetype': 'application/pdf',
+            #     'public': True,
+            # })
+
+            # Preparar el contexto para enviar el correo
+            ctx = {
+                'default_model': 'tarea.mantenimiento',  # Modelo actual
+                'default_res_ids': [record.id],  # ID del registro
+                'default_use_template': True,
+                'default_template_id': template.id,
+                'default_composition_mode': 'comment',  # Modo de composición
+                'force_email': True,
+                # 'attachment_ids': [(4, attachment.id)],  # Agregar el archivo adjunto
+            }
+
+            # Verificar el contexto (Debugging)
+            print("Contexto de envío:", ctx)
+
+            # Retornar la acción para abrir el asistente de composición de correos
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'mail.compose.message',
+                'views': [(False, 'form')],
+                'view_id': False,
+                'target': 'new',
+                'context': ctx,
+            }
+
+
 
     # @api.multi
     
