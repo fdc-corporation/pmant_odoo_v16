@@ -55,7 +55,11 @@ class Tarea(models.Model):
     fecha_hoy = fields.Char(string="Fecha Formateada", compute="_fecha_formateada")
     is_evaluacion = fields.Boolean(string="Es Hoja de Recepcion")
     oc_id = fields.Many2one('oc.compras', string="OC")
-
+    is_tecnico = fields.Boolean(
+        compute='_compute_is_tecnico',
+        string='Is Técnico',
+        store=False
+    )
 
     @api.onchange('tipo')
     def tipo_click(self):
@@ -117,6 +121,7 @@ class Tarea(models.Model):
                             if record.state_id.sequence == 3:
                                 fecha_actual = fields.Date.today()
                                 ot.fecha_ejec = fecha_actual
+
                 # Si el estado tiene una secuencia específica (por ejemplo, 3)
                 if record.state_id.sequence == 3:
                     record._fecha_ejecutada()
@@ -147,7 +152,9 @@ class Tarea(models.Model):
                 equipo.write({'fecha_ejec': fecha_actual})
 
 
-
+    def _compute_is_tecnico(self):
+        for record in self:
+            record.is_tecnico = self.env.user.has_group('pmant.group_pmant_tecnico')
 
     def _evento_calendario_proximo_servicio(self):
         for record in self:

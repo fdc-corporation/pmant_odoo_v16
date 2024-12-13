@@ -30,6 +30,11 @@ class OTS(models.Model):
     subodinados = fields.Many2many('res.users', string="Subordinados")
     event_id = fields.Many2one('calendar.event', string='Evento en calendario')
     is_evaluacion = fields.Boolean(string="Es una Evaluacion") 
+    is_tecnico = fields.Boolean(
+        compute='_compute_is_tecnico',
+        string='Is Técnico',
+        store=False
+    )
 
     @api.depends('estado')
     def _get_tex(self):
@@ -44,7 +49,11 @@ class OTS(models.Model):
             else:
                 record.order_compra = False
 
-
+    @api.depends_context('uid')
+    def _compute_is_tecnico(self):
+        for record in self:
+            record.is_tecnico = self.env.user.has_group('pmant.group_pmant_tecnico')
+            
     @api.model
     def create(self, vals):
         if 'tarea' in vals and vals['tarea']:
