@@ -310,8 +310,8 @@ class PortalPmant(http.Controller):
         })
 
     
-    @http.route('/descargas/reporte/mantenimiento/<int:tarea_id>/<string:name>', type='http', auth='user', website=True,  methods=['GET'])
-    def descarga_reporte_mantenimiento(self, tarea_id, name, **kw):
+    @http.route('/descargas/reporte/mantenimiento/<int:tarea_id>', type='http', auth='user', website=True,  methods=['GET'])
+    def descarga_reporte_mantenimiento(self, tarea_id, **kw):
         report_action = http.request.env['ir.actions.report'].sudo()
         tarea = request.env['tarea.mantenimiento'].sudo().browse(tarea_id)
         for record in tarea :
