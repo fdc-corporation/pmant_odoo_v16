@@ -79,6 +79,8 @@
         'views/web/adjuntos_equipos.xml',     
         'views/web/evaluciones_equipo.xml',      
         'views/web/certificados_equipo.xml',
+        'views/web/servicios_ejecucion.xml',
+        'views/web/index_servicios_ejecuccion.xml',
         # CODIGO - VENTAS A PMANT SERVICIOS
         'views/ventas/create_mantenimiento.xml',
         'views/ventas/sale_order_views.xml',

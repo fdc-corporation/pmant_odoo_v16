@@ -265,9 +265,20 @@ class PortalPmant(http.Controller):
             'total_paginas': total_paginas,
         })
 
+    @http.route(['/my/servicios/ejecucion'], type="http", auth="user", website=True)
+    def get_servicio_ejecucion (self):
+        user = request.env.user.partner_id
+        # Filtrar servicios ejecutados por el usuario
+        domain = ["|", ("ubicacion", "=", user.id), ("planequipo.tarea.ots.stage_id", "in", [1, 2])]
+        equipos = request.env["maintenance.equipment"].sudo().search(domain)
+        print(equipos)
+        return request.render('pmant.servicios_ejecucion', {
+            'equipo': equipos,
+        })
+
+
 
     
-
 
     @http.route(['/my/equipo/<int:equipo_id>/adjuntos', '/my/equipo/<int:equipo_id>/adjuntos/page/<int:pagina>'], type="http", auth="user", website=True)
     def adjuntos_equipo(self, equipo_id, pagina=1):
@@ -643,3 +654,5 @@ class PortalPmant(http.Controller):
 
         # Retornar la respuesta para descargar el archivo
         return request.make_response(pdf, headers=pdfhttpheaders)
+
+
