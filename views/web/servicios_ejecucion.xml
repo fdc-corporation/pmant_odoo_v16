@@ -229,7 +229,7 @@
 														</span>
 														<span>
 															<span>
-																Fecha de programada :
+																Fecha programada :
 															</span>
 																<span t-esc="ot.schedule_date" />
 														</span>
