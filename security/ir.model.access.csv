@@ -54,7 +54,7 @@ pmant_admin_acc5,ADMIN_IMAGENES,model_adjuntoimage_mantenimiento,pmant.group_pma
 pmant_admin_acc6,ADMIN_PROCESOS,model_proceso_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc7,ADMIN_ESTADOPROCESO,model_estadoproceso_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc8,ADMIN_PLANEQUIPOPROCESO,model_planequipoproceso_mantenimiento,pmant.group_pmant_admin,1,1,1,1
-pmant_admin_acc9,ADMIN_OTS,model_maintenance_request,pmant.group_pmant_admin,1,1,1,1
+pmant_admin_acc9,ADMIN_OTS,model_maintenance_request,pmant.group_pmant_admin,1,1,0,1
 pmant_admin_acc10,ADMIN_TIPO_PLAN,model_tipoplan_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc11,ADMIN_GRUPO_PROCESO,model_grupoproceso_mantenimiento,pmant.group_pmant_admin,1,1,1,1
 pmant_admin_acc12,ADMIN_PRIORIDAD,model_prioridad_mantenimiento,pmant.group_pmant_admin,1,1,1,1

@@ -155,6 +155,16 @@ class EquiposUbicacion(models.Model):
         'ubicacion',  # Campo inverso definido en maintenance.equipment
         string="Equipos"
     )
+    is_tecnico = fields.Boolean(
+        compute='_compute_is_tecnico',
+        string='Is Técnico',
+        store=False
+    )
+
+
+    def _compute_is_tecnico(self):
+        for record in self:
+            record.is_tecnico = self.env.user.has_group('pmant.group_pmant_tecnico')
 
     @api.model
     def equipos_model(self):

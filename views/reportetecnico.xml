@@ -37,10 +37,7 @@
 									<strong>
 												N° de Orden:
 											</strong>
-									<t t-if="doc.name">
-										<span t-field="doc.name"/>
-									</t>
-									
+									<span t-field="doc.name"/>
 								</td>
 								<td class="col-6">
 									<strong>
@@ -254,21 +251,21 @@
 									<br/>
 										<t t-if="doc.is_evaluacion">
 											<table class="table table-sm o_main_table" style="width: 100%; font-size: 11px;margin-top:0px;">
-												<thead style="text-align: center;border-collapse: collapse; font-size: 13px; border: 0px;color:white;background-color:  #22629D;">
-													<tr class="no-wrap" style="border-collapse: collapse;border-top-left-radius: 7px;border-top-right-radius: 7px;">
-														<td colspan="3" style="border-top-left-radius: 7px;border-top-right-radius: 7px;">
+												<thead>
+													<tr class="no-wrap">
+														<td colspan="3" style="text-align: center; font-size: 13px; border: 0px;border-bottom:3.5px solid #3191C5;">
 															<strong>
-																Hoja de Evaluacion
+																Historial de Evaluacion
 															</strong>
 														</td>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
-														<th style="text-align: left; font-size: 13px;width:50%; border: 0px;border-bottom:4.5px solid #3191C5;">
+														<th style="text-align: left; font-size: 13px;width:50%; border: 0px;">
 															<strong>Datos del Receptor </strong>
 														</th>
-														<th style="text-align: left; font-size: 13px;width:50%; border: 0px;border-bottom:4.5px solid #3191C5;">
+														<th style="text-align: left; font-size: 13px;width:50%; border: 0px;">
 															<strong>Comentarios de recepción</strong>
 														</th>
 													</tr>
@@ -277,31 +274,22 @@
 															<strong>
 															Receptor:
 															</strong>
-															<span t-field="doc.create_user.name"/>
+															<span t-esc="doc.create_user.name"/>
 														</td>
 														<td style="whidth:50%;">
-															<span t-field="doc.comentario_tecnico"/>
+															<span t-esc="doc.comentario_tecnico"/>
 														</td>
 													</tr>
 												</tbody>
 											</table>
-											<br/>
-											<table class="table table-sm o_main_table" style="width: 100%; font-size: 11px;">
-												<tr>
-													<th colspan="2" style="text-align: center; font-size: 13px; border: 0px;color:white;background-color:  #22629D;">
-														Comentarios de recepción
-													</th>
-												</tr>
-											<!-- Inicializamos el contador -->
-											</table>
-											<div class="row">
+
+											<ul>
 												<t t-foreach="doc.adjuntos_evaluaciones" t-as="imagen">
-													<div class="col-6" style="margin-bottom:15px;">
-														<span style="font-size:12px;" t-field="imagen.comentario"/>
-													</div>
+													<li>
+														<span style="font-size:12px;" t-esc="imagen.comentario"/>
+													</li>
 												</t>
-											</div>
-											<br/>
+											</ul>
 										</t>
 	
 									<div>
@@ -378,7 +366,7 @@
 													</td>
 													<td>
 														<strong>
-																	Descripción:
+																	Descripcion:
 																</strong>
 														<span t-field="pr.descripcion"/>
 													</td>
@@ -430,17 +418,17 @@
 									<strong style="font-size:12px;">
 												Firmado por:
 											</strong>
-									<span t-field="doc.namefirma"/>
+									<t t-esc="doc.namefirma"/>
 								</p>
 								<p style="margin:0px; 0px -5px 0px;font-size:12px;">
 									<strong style="font-size:12px;">
 												DNI:
 											</strong>
-									<span t-field="doc.dni"/>
+									<t t-esc="doc.dni"/>
 								</p>
 								<p style="margin:0px; 0px -5px 0px;font-size:12px;">
 									<strong>Comentario:</strong>
-									<span t-field="doc.comentario"/>
+									<t t-esc="doc.comentario"/>
 								</p>
 							</div>
 						</div>

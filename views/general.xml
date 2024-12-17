@@ -203,10 +203,10 @@
                                     <field name="clasi2"/>
                                 </group>
                             </page>
-                            <page string="OTs" >
+                            <page string="OTs" invisible="is_tecnico">
                                 <field name="ots"/>
                             </page>
-                            <page string="Hoja de Recepcion" invisible="not is_evaluacion">
+                            <page string="Hoja de Recepcion" invisible="not is_evaluacion or state_id not in [1,2]">
                                 <group>
                                     <field name="create_user"/>
                                     <field name="fecha_entrada"/>
@@ -226,8 +226,9 @@
             </field>
          </record>
 
+        <menuitem id="recepcion_menu_pmant" name="Recepción de Equipos"  parent="maintenance.menu_m_request"  action="tarea_list_action" />
         <menuitem id="tarea_menuv" name="Tareas"  parent="maintenance.menu_m_request"  action="tarea_list_action" />
-
+        
         <menuitem id="tarea_menuv_2" name="Reporte Tecnico"  parent="maintenance.menu_maintenance_title"  action="reporte_tecnico_list_action" />
 
  </odoo>
