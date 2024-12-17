@@ -157,7 +157,7 @@ class EquiposUbicacion(models.Model):
     )
     is_tecnico = fields.Boolean(
         string='Is Técnico',
-        compute="_compute_is_tecnico",
+        default=lambda self: self._compute_is_tecnico(),
         store=False
     )
 
