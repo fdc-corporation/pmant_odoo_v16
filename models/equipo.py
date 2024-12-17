@@ -156,23 +156,15 @@ class EquiposUbicacion(models.Model):
         string="Equipos"
     )
     is_tecnico = fields.Boolean(
+        compute='_compute_is_tecnico',
         string='Is Técnico',
-        default=lambda self: self._compute_is_tecnico(),
         store=False
     )
 
-    @api.depends_context('uid')
+
     def _compute_is_tecnico(self):
-        """ Calcula si el usuario pertenece al grupo técnico """
         for record in self:
             record.is_tecnico = self.env.user.has_group('pmant.group_pmant_tecnico')
-
-    def create(self, vals):
-        """ Sobrescribe create para asegurar inicialización correcta """
-        res = super(EquiposUbicacion, self).create(vals)
-        res._compute_is_tecnico()
-        return res
-
 
     @api.model
     def equipos_model(self):
