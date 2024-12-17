@@ -36,6 +36,9 @@ class OTS(models.Model):
         store=False
     )
 
+    
+
+
     @api.depends('estado')
     def _get_tex(self):
         if self.estado:

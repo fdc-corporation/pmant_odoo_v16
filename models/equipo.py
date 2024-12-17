@@ -161,7 +161,7 @@ class EquiposUbicacion(models.Model):
         store=False
     )
 
-
+    @api.model
     def _compute_is_tecnico(self):
         for record in self:
             record.is_tecnico = self.env.user.has_group('pmant.group_pmant_tecnico')
