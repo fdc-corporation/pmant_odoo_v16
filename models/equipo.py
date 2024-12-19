@@ -92,7 +92,7 @@ class Equipo(models.Model):
         print('--------------------------------------------------')
         print(base_url)
         equipos_filtro = ''
-        if base_url == "https://fdccorp.com.pe":
+        if base_url == "https://equiposindustriales.pe":
             equipos_filtro = self.search([
                 '|',
                 ('serial_no', '=', False),
@@ -111,7 +111,7 @@ class Equipo(models.Model):
             for equipo in equipos_filtro:
                 if not equipo.serial_no:
                     equipo.serial_no = self._generate_serial_number_ct(equipo)
-        if base_url != "https://fdccorp.com.pe" and base_url != "http://compresores.com.pe":
+        if base_url != "https://equiposindustriales.pe" and base_url != "http://compresores.com.pe":
             equipos_filtro = self.search([
                 '|',
                 ('serial_no', '=', False),

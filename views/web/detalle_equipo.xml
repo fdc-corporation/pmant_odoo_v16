@@ -7,7 +7,7 @@
 					<div class="card-contacto-main">
 						<div class="card-contacto">
 							<div class="text-contacto">
-								<t t-if="dominio_web == 'fdccorp.com.pe'">
+								<t t-if="dominio_web == 'equiposindustriales.pe'">
 									<img src="/pmant/static/src/css/iconos/ico_fdc.png" alt="" />
 									<span>
 										FDC CORPORATION E.I.R.L.
@@ -19,7 +19,7 @@
 										Compresores de Tornillo S.A.C.
 									</span>
 								</t>
-								<t t-if="dominio_web != 'fdccorp.com.pe' and dominio_web != 'compresores.com.pe'">
+								<t t-if="dominio_web != 'equiposindustriales.pe' and dominio_web != 'compresores.com.pe'">
 									<img src="/pmant/static/src/css/iconos/ico_fdc.png" alt="" />
 									<span>
 										FDC CORPORATION E.I.R.L.
@@ -110,7 +110,7 @@
 					<div class="card-contacto-main">
 						<div class="card-contacto">
 							<div class="text-contacto">
-								<t t-if="dominio_web == 'fdccorp.com.pe'">
+								<t t-if="dominio_web == 'equiposindustriales.pe'">
 									<img src="/pmant/static/src/css/iconos/ico_fdc.png" alt="" />
 									<span>
 										FDC CORPORATION E.I.R.L.
@@ -122,7 +122,7 @@
 										Compresores de Tornillo S.A.C.
 									</span>
 								</t>
-								<t t-if="dominio_web != 'fdccorp.com.pe' and dominio_web != 'compresores.com.pe'">
+								<t t-if="dominio_web != 'equiposindustriales.pe' and dominio_web != 'compresores.com.pe'">
 									<img src="/pmant/static/src/css/iconos/ico_fdc.png" alt="" />
 									<span>
 										FDC CORPORATION E.I.R.L.
