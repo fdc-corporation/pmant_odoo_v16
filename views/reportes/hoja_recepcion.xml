@@ -314,14 +314,14 @@
                                     <img t-attf-src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg" class="card-img-top" style=" height:100px; margin:0px 0px 0px 0px;"/>
                                 </t>
                                 <t t-else="">
-                                    <img t-attf-src="data:image/jpg;base64,{{ doc.adjunto }}" class="card-img-top" style="height:100px;margin:0px 0px 0px 0px;"/>
+                                    <img t-attf-src="data:image/jpg;base64,{{ doc.firma_evaluacion }}" class="card-img-top" style="height:100px;margin:0px 0px 0px 0px;"/>
                                 </t>
                             </div>
                             <p style="margin:0px; 0px -5px 0px;font-size:12px">
                                 <strong style="font-size:12px;">
 											Firmado por:
 										</strong>
-                                <t t-esc="doc.namefirma"/>
+                                <t t-esc="doc.firmante"/>
                             </p>
                             <!--<p style="margin:0px; 0px -5px 0px;font-size:12px;">-->
                             <!--	<strong style="font-size:12px;">-->
@@ -331,7 +331,7 @@
                             <!--</p>-->
                             <p style="margin:0px; 0px -5px 0px;font-size:12px;">
                                 <strong>Comentario:</strong>
-                                <t t-esc="doc.comentario"/>
+                                <t t-esc="doc.comentario_firma"/>
                             </p>
                         </div>
                     </div>

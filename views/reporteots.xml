@@ -297,7 +297,7 @@
                                             <tr class="no-wrap">
                                                 <td colspan="3" style="text-align: center; font-size: 13px; border: 0px;border-bottom:3.5px solid #3191C5;">
                                                     <strong>
-																Historial de Evaluacion
+																Historial de Recepción 
 															</strong>
                                                 </td>
                                             </tr>
@@ -338,7 +338,7 @@
                                     <table class="table table-sm o_main_table " style="width: 100%; font-size: 11px;">
                                         <tr class="no-wrap">
                                             <td scope="col" colspan="4" style="text-align: center; font-size: 13px; border: 0px;border-bottom:3.5px solid #3191C5;">
-													Procesos
+													Procesos del servicio
 												</td>
                                         </tr>
                                         <tr class="no-wrap">

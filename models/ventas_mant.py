@@ -4,8 +4,8 @@ from odoo.exceptions import UserError, ValidationError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    ots = fields.Many2one('tarea.mantenimiento', string="OTs")
-
+    ots = fields.Many2one('tarea.mantenimiento', string="Tarea")
+    servicios_cantidad = fields.Integer(compute="_total_tareas")
     def create_mantenimiento(self):
         for order in self:
             try:
@@ -46,9 +46,25 @@ class SaleOrder(models.Model):
 
                 # Añadir todas las líneas a la tarea de mantenimiento
                 mantenimiento.write({'planequipo': lines_to_add})
+                estado = self.env.ref('oc_compras.estado_servicios', raise_if_not_found=False)
+                self.ots.oc_id = self.oc_id.id
+                self.oc_id.state = estado.id
                 self.write({
                     'ots' : mantenimiento_id
                 })
             except UserError as e:
                 raise UserError(f'Ups, no se logró crear una nueva solicitud de mantenimiento: {str(e)}')
 
+    def action_view_services(self) :
+        return {
+            "type" : "ir.actions.act_window",
+            "name" : 'Tareas',
+            "view_mode" : 'tree',
+            'res_model': 'tarea.mantenimiento',
+            "domain" : [('id', '=', self.ots.id)],
+            "context" : "{'create' : False}",
+        }
+
+    def _total_tareas (self):
+        for record in self:
+            record.servicios_cantidad = self.env['tarea.mantenimiento'].search_count([('id', '=', self.ots.id)])

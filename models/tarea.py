@@ -60,6 +60,10 @@ class Tarea(models.Model):
         string='Is Técnico',
         store=False
     )
+    firma_evaluacion = fields.Binary()
+    firmante = fields.Char(string="Nombre del firmante")
+    comentario_firma = fields.Text('Comentario del firmante')
+
 
     @api.onchange('tipo')
     def tipo_click(self):
