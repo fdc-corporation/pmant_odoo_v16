@@ -11,7 +11,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Equipos" invisible="is_tecnico" >
                     <field name="is_tecnico" invisible="true"></field>
-                    <field name="equipos_ubicacion">
+                    <field name="equipos_ubicacion" >
                         <tree string="Equipos">
                             <field name="name"/>
                             <field name="assign_date"/>

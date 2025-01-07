@@ -310,7 +310,7 @@
 										Firma digital del cliente
 									</span>
                             <div class="" style="width:100%;height:100%;border:3px dashed grey; font-size=12px;">
-                                <t t-if="not doc.adjunto">
+                                <t t-if="not doc.firma_evaluacion">
                                     <img t-attf-src="https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg" class="card-img-top" style=" height:100px; margin:0px 0px 0px 0px;"/>
                                 </t>
                                 <t t-else="">
