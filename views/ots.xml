@@ -7,7 +7,9 @@
 		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_search"/>
 		<field name="arch" type="xml">
 			<search>
+			<field name="order_compra" />
 				<filter name="filter_my_orders" groups="pmant.group_pmant_tecnico" string="Mis Órdenes" domain="[('user_id', '=', uid)]"/>
+                <filter string="N° de OC" name="filter_oc" domain="[('order_compra','=', order_compra)]"/>
 			</search>		
 		</field>
 	</record>
