@@ -49,10 +49,10 @@
 				<field name="ubicacion" readonly="1" />
 				<field name="oportunidad" readonly="1"/>
 				<field name="is_tecnico" invisible="1"/>
-				<field name="order_compra" invisible="is_tecnico"  domain="[('cliente', '=', empresa)]" />
+				<field name="order_compra" invisible="is_tecnico"  options="{'no_quick_create': true, 'no_create_edit': true}"  domain="[('cliente', '=', empresa)]" />
 				<field name="selec_sunat" invisible="stage_id in (1, 2, 3)" />
-				<field name="factura_sunat" invisible="not selec_sunat"/>
-                <field name="factura" invisible="stage_id in (1, 2, 3) and selec_sunat or is_tecnico"  domain="[('partner_id', '=', empresa)]"  />
+				<field name="factura_sunat"  invisible="not selec_sunat"/>
+                <field name="factura"  invisible="stage_id in (1, 2, 3) and selec_sunat or is_tecnico"  options="{'no_quick_create': true, 'no_create_edit': true}"  domain="[('partner_id', '=', empresa)]"  />
 			</xpath>
 			<xpath expr="//field[@name='schedule_date']" position="after">
 				<field name="subodinados" widget="many2many_tags" ></field>

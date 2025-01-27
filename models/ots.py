@@ -48,6 +48,8 @@ class OTS(models.Model):
         for record in self:
             if record.tarea and record.tarea.oc_id:
                 record.order_compra = record.tarea.oc_id.id
+                if record.tarea.oc_id:
+                    record.tarea.oc_id.ot_servicio = record.id
             else:
                 record.order_compra = False
 
