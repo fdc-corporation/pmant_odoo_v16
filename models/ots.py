@@ -37,6 +37,7 @@ class OTS(models.Model):
     is_tecnico = fields.Boolean(
         compute="_compute_is_tecnico", string="Is Técnico", store=False
     )
+    not_oc = fields.Boolean(string="No tiene OC?")
 
     @api.depends("estado")
     def _get_tex(self):
@@ -107,10 +108,11 @@ class OTS(models.Model):
 
     def _validacion_etapas(self):
         for record in self:
-            if record.stage_id.sequence == 4 and not record.order_compra:
-                raise UserError(
-                    _("Debe registrar la OC en el mudlo de Orden de compras")
-                )
+            if record.not_oc == False:
+                if record.stage_id.sequence == 4 and not record.order_compra:
+                    raise UserError(
+                        _("Debe registrar la OC en el mudlo de Orden de compras")
+                    )
 
             elif record.stage_id.sequence == 5:
                 if not record.selec_sunat and not record.factura:
