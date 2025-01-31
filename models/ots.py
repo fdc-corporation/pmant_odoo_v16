@@ -44,7 +44,7 @@ class OTS(models.Model):
         if self.estado:
             self.tex = "Urgente"
 
-    @api.depends("tarea")
+    @api.depends("tarea", "order_compra")
     def _compute_order_compra(self):
         for record in self:
             if record.tarea and record.tarea.oc_id:
